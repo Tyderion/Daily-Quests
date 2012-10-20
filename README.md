@@ -5,6 +5,6 @@ This will be an application where you can do the following features:
 - Users can only see their own lists or lists they've been invited to or public lists.
 - Users can select from all public Items that are in the database.
 - Items and Lists can be created as private or public.
-. An item can be anything, for example 
+- An item can be anything, for example 
 > - a thing: e.g. a shovel
 > - a task: e.g. clean the toilet etc
