@@ -7,4 +7,5 @@ This will be an application where you can do the following features:
 - Items and Lists can be created as private or public.
 - An item can be anything, for example 
   - a thing: e.g. a shovel
-  - a task: e.g. clean the toilet etc
+  - a task: e.g. "clean the toilet"
+  - anything you can think of that needs to be done
