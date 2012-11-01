@@ -7,6 +7,7 @@ gem 'rails', '3.2.8'
 gem 'sqlite3'
 
 gem 'less-rails'
+gem 'sass' #needed for nifty layout
 gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'will_paginate'
