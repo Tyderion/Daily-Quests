@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
 
   def index
-    render 'layouts/application'
+    render 'test'
   end
 
 end

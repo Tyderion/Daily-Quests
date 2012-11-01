@@ -17,6 +17,7 @@ gem "i18n-js"
 gem "i18n"
 gem 'chosen-rails'
 gem 'haml'
+gem 'rack-pjax'
 
 group :development do
   gem 'annotate'
