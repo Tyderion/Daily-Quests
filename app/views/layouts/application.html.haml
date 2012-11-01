@@ -1,0 +1,13 @@
+!!!
+%html{lang: "en"}
+  %head
+    %title= content_for?(:title) ? yield(:title) : t('application.name')
+    = stylesheet_link_tag    "application", :media => "all"
+
+    = csrf_meta_tags
+  %body
+
+    = content_for?(:content) ? yield(:content) : yield
+
+    -#JS at the bottom to reduce loading time
+    = javascript_include_tag "application", debug: true
