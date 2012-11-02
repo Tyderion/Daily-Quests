@@ -18,6 +18,9 @@ module DailyQuests
       g.helper_specs false
     end
 
+    #We don't want to log passwords or confirmations
+    config.filter_parameters += [:password, :password_confirmation]
+
     # Enable PJAX
     config.middleware.use Rack::Pjax
     # Settings in config/environments/* take precedence over those specified here.
