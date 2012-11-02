@@ -3,14 +3,15 @@
   =render 'shared/head'
   %body
     =render 'shared/header'
-    .container-fluid
-      .row-fluid
-        .span3=render 'shared/sidebar'
-        .span9
-          - flash.each do |name, msg|
-            = content_tag :div, msg, :id => "flash_#{name}"
+    %div.container-fluid
+      %div.row-fluid
+        %div.span3=render 'shared/sidebar'
+        %div.span9
+          .data-pjax-container
+            - flash.each do |name, msg|
+              = content_tag :div, msg, :id => "flash_#{name}"
 
-          - if show_title?
+          -if show_title?
             %h1= yield(:title)
 
           = yield
