@@ -21,7 +21,7 @@ require 'spec_helper'
 
 describe Adventurer do
   before :each do
-    @adv = Adventurer.new
+  @adv = Adventurer.new
   end
 
   it "should have a first name" do
@@ -31,7 +31,14 @@ describe Adventurer do
     @adv.should respond_to :last_name
   end
   it "should validate the presence of the last name" do
-    @adv.should validate_presence_of :last_name
+    should validate_presence_of :last_name
+  end
+
+  it "should have an email" do
+    @adv.should respond_to :email
+  end
+  it "should validate the presence of the email" do
+    should validate_presence_of :email
   end
 
 end
