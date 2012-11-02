@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Hero do
+
   it "should have a first name" do
     should respond_to :first_name
   end
@@ -14,7 +15,9 @@ describe Hero do
   it "should have an email" do
     should respond_to :email
   end
+
   it "should validate the presence of the email" do
     should validate_presence_of :email
   end
+
 end
