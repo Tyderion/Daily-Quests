@@ -12,6 +12,12 @@ end
 module DailyQuests
   class Application < Rails::Application
 
+    # don't generate RSpec tests for views and helpers
+    config.generators do |g|
+      g.view_specs false
+      g.helper_specs false
+    end
+
     # Enable PJAX
     config.middleware.use Rack::Pjax
     # Settings in config/environments/* take precedence over those specified here.
