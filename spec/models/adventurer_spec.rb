@@ -27,11 +27,11 @@ describe Adventurer do
   it "should have a first name" do
     @adv.should respond_to :first_name
   end
-  it "should have a last name" do
-    @adv.should respond_to :last_name
+  it "should have a name" do
+    @adv.should respond_to :name
   end
-  it "should validate the presence of the last name" do
-    should validate_presence_of :last_name
+  it "should validate the presence of the name" do
+    should validate_presence_of :name
   end
 
   it "should have an email" do
