@@ -20,5 +20,18 @@
 require 'spec_helper'
 
 describe Adventurer do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before :each do
+    @adv = Adventurer.new
+  end
+
+  it "should have a first name" do
+    @adv.should respond_to :first_name
+  end
+  it "should have a last name" do
+    @adv.should respond_to :last_name
+  end
+  it "should validate the presence of the last name" do
+    @adv.should validate_presence_of :last_name
+  end
+
 end
