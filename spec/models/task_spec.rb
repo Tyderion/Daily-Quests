@@ -18,8 +18,8 @@ describe Task do
      should have_many(:quests)
   end
 
-  it "should have many Questseries" do
-     should have_many(:questseries)
+  it "should have many Questsequence" do
+     should have_many(:questsequence)
   end
 
 

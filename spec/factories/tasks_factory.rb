@@ -14,8 +14,8 @@ FactoryGirl.define do
     association: :task, factory: :task, type: TaskType.id_for "Task"
     association: :quest, factory: :task, type: TaskType.id_for "Quest"
   end
-  factory :questseries do
+  factory :questsequence do
     association: :quest, factory: :task, type: TaskType.id_for "Quest"
-    association: :questseries, factory: :task, type: TaskType.id_for "Questseries"
+    association: :questsequence, factory: :task, type: TaskType.id_for "Questsequence"
   end
 end
