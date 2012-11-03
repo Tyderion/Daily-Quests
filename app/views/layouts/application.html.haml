@@ -7,7 +7,7 @@
       %div.row-fluid
         %div.span3=render 'shared/sidebar'
         %div.span9
-          .data-pjax-container
+          %div{:"data-pjax-container" => ""}
             - flash.each do |name, msg|
               = content_tag :div, msg, :id => "flash_#{name}"
 
