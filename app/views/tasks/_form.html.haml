@@ -4,6 +4,7 @@
     = f.input :title
     = f.input :description
     = f.input :private
+    = f.input :typ, as: :select, collection: TaskType.all
   = f.actions do
     = f.action :submit
     = f.action :cancel

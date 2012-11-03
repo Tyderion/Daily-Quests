@@ -9,6 +9,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(params[:task])
+    @task.private = false if @task.private.nil?
     if @task.save
       redirect_to @task, :notice => "Successfully created task."
     else

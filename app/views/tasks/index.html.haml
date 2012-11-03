@@ -3,11 +3,11 @@
 %table
   %tr
     %th Title
-    %th Description
+    %th Type
   - for task in @tasks
     %tr
       %td= task.title
-      %td= task.description
+      %td= TaskType.name_for task.typ.to_i
       %td= link_to 'Edit', edit_task_path(task)
       %td= link_to 'Destroy', task, :confirm => 'Are you sure?', :method => :delete
 

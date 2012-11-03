@@ -22,6 +22,8 @@ gem 'rack-pjax'
 
 #Lookup Tables (e.g. Type)
 gem 'rails_lookup'
+gem 'formtastic'
+gem 'formtastic-plus-bootstrap'
 
 group :development do
   gem 'annotate'
@@ -40,6 +42,7 @@ group :development, :test do
 
 end
 group :test do
+  gem "shoulda"
   gem 'database_cleaner'
   gem 'capybara'
   gem 'factory_girl_rails'
@@ -76,3 +79,5 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+gem "mocha", :group => :test

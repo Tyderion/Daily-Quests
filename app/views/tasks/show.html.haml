@@ -6,6 +6,9 @@
 %p
   %strong Description:
   = @task.description
+%p
+  %strong Type:
+  = @task.typ
 
 %p
   = link_to "Edit", edit_task_path(@task)

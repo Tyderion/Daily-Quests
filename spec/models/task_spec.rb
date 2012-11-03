@@ -44,7 +44,7 @@ describe Task do
     expect { @task.public? }.to_not raise_error
   end
   it "should have a type" do
-    should respond_to :type
+    should respond_to :typ
   end
   it "should have many Subasks " do
     should have_many(:subtasks)

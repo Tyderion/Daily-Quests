@@ -11,6 +11,7 @@
  *= require bootstrap-without-forms
  *= require formtastic-plus-bootstrap
  *= require formtastic-plus-bootstrap/responsive
+ *= require chosen
  *= require_self
  *= require_tree .
  */
