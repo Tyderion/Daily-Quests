@@ -20,6 +20,9 @@ gem 'chosen-rails'
 gem 'haml'
 gem 'rack-pjax'
 
+#Lookup Tables (e.g. Type)
+gem 'rails_lookup'
+
 group :development do
   gem 'annotate'
   gem 'nifty-generators'
@@ -34,12 +37,14 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+
 end
 group :test do
   gem 'database_cleaner'
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'email_spec'
+  gem 'faker'
 end
 
 
