@@ -21,6 +21,8 @@ module DailyQuests
     #We don't want to log passwords or confirmations
     config.filter_parameters += [:password, :password_confirmation]
 
+    #Load validators from lib
+    config.autoload_paths += %W["#{config.root}/lib/validators/"]
     # Enable PJAX
     config.middleware.use Rack::Pjax
     # Settings in config/environments/* take precedence over those specified here.
