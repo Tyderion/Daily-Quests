@@ -5,11 +5,30 @@ describe Task do
     @task = FactoryGirl.create(:task)
   end
 
-  it "should have a description" do
-    should respond_to :description
+  describe "the description" do
+    it "should be called description" do
+      should respond_to :description
+    end
+    it "should be validated for presence" do
+      should validate_presence_of :description
+    end
   end
-  it "should respond to title" do
-    should respond_to :title
+
+  describe "the title" do
+    it "should be called title" do
+      should respond_to :title
+    end
+    it "should be validated for presence" do
+        should validate_presence_of :title
+    end
+  end
+  describe "the creator" do
+    it "should respond to creator" do
+      should respond_to :creator
+    end
+    it "should be validated for presence" do
+      should validate_presence_of :creator
+    end
   end
 
   it "should respond to private" do
