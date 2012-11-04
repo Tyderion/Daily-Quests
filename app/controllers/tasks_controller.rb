@@ -1,6 +1,12 @@
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
+    @task = Task.find(params[:task_id]) if params[:task_id]
+    if params[:private]
+      @task.private = @task.public?
+      @task.save
+      flash.now[:notice] = "Changed task from #{ @task.not_visibility } to #{ @task.visibility }"
+    end
   end
 
   def new

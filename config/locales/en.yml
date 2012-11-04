@@ -4,3 +4,6 @@
 en:
   application:
     name: "Daily Quests"
+  task:
+    private: "Private"
+    public: "Public"

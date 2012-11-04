@@ -5,9 +5,9 @@
     =render 'shared/header'
     %div.container-fluid
       %div.row-fluid
-        %div.span3=render 'shared/sidebar'
-        %div.span9
-          .data-pjax-container
+        .span3=render 'shared/sidebar'
+        %div.span6
+          -unless @task
             - flash.each do |name, msg|
               = content_tag :div, msg, :id => "flash_#{name}"
 
@@ -15,6 +15,8 @@
             %h1= yield(:title)
 
           = yield
+        .span3
+          =yield(:rightbar)
       =render 'shared/footer'
 
     =render 'shared/javascripts'

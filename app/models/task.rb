@@ -8,8 +8,13 @@ class Task < ActiveRecord::Base
   validates :description, presence: true
 
 
+  def visibility
+    private? ? I18n.t('task.private') : I18n.t('task.public')
+  end
 
-
+  def not_visibility
+    private? ?  I18n.t('task.public') : I18n.t('task.private')
+  end
 
 
   def public?
