@@ -7,3 +7,4 @@ en:
   task:
     private: "Private"
     public: "Public"
+    new: "New Task"

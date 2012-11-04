@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103211000) do
+ActiveRecord::Schema.define(:version => 20121104130156) do
+
+  create_table "subtasks", :force => true do |t|
+    t.integer  "subtask_id"
+    t.integer  "task_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "position_in_task"
+  end
 
   create_table "task_types", :force => true do |t|
     t.string "name"
@@ -24,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20121103211000) do
     t.datetime "updated_at",  :null => false
     t.boolean  "private"
     t.integer  "creator"
-    t.integer  "typ"
+    t.integer  "type"
   end
 
 end

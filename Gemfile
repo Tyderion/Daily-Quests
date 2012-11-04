@@ -18,7 +18,7 @@ gem "i18n-js"
 gem "i18n"
 gem 'chosen-rails'
 gem 'haml'
-gem 'rack-pjax'
+#gem 'rack-pjax'
 
 #Lookup Tables (e.g. Type)
 gem 'rails_lookup'

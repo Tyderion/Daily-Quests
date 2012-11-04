@@ -1,27 +1,8 @@
 - title "Tasks"
 %ul
-  Title
   - for task in @tasks
-    %li.pjax= link_to task.title, :task_id => task
-%p= link_to "New Task", new_task_path
-
+    %li.pjax_container= link_to task.title,tasks_path(:task_id => task), remote: true
+%p.pjax_content= link_to "New Task", new_task_path
 - content_for :rightbar do
-  %div{:"data-pjax-container"=> ""}
-    %div.task_details
-      -if @task
-        .well
-          - flash.each do |name, msg|
-            = content_tag :div, msg, :id => "flash_#{name}"
-          %h2 Task Details
-          %ul.task_list
-            -task = Task.find(1)
-            %li
-              = task.title
-              %div.triangle
-            /%li.test=# link_to @task.private? ? "Private" : "Public", tasks_path(task_id: @task, private: @task.private?)
-            %li.toggle
-              = task.description
-              -(2..4).each do |i|
-                %ul
-                  %li=render partial: 'details', locals: {task: Task.find(i)}
+  =render partial: 'details_container'
 

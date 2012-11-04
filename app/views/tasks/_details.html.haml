@@ -3,5 +3,8 @@
     = task.title
     %div.triangle
   /%li.test=# link_to @task.private? ? "Private" : "Public", tasks_path(task_id: @task, private: @task.private?)
-  %li.toggle= task.description
+  %li.toggle
+    = task.description
+    -task.subtasks.order("position_in_task ASC").each do |i|
+      =render partial: 'details', locals: {task: i}
 

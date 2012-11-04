@@ -3,10 +3,11 @@ class CreateTaskType < ActiveRecord::Migration
     create_table :task_types do |t|
       t.string :name
     end
-    add_column :tasks, :typ, :integer #Maybe put not_null constraints here.
+    #rename_column :tasks, :type, :inherit_type #Maybe put not_null constraints here.
+    add_column :tasks, :type, :integer
   end
   def self.down
     drop_table :task_types
-    remove_column :tasks, :typ
+    remove_column :tasks, :type
   end
 end

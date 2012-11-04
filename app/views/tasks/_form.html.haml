@@ -1,10 +1,25 @@
 = semantic_form_for @task do |f|
-  = f.error_messages
+  .subtasks
+    %h4 Subtasks
+    %ol
   = f.inputs do
     = f.input :title
     = f.input :description
     = f.input :private
-    = f.input :typ, as: :select, collection: TaskType.all
+    = f.input :type, as: :select, collection: TaskType.all
+
+
+
   = f.actions do
-    = f.action :submit
-    = f.action :cancel
+    = f.action :submit, button_html: {class: "pjax-container"}
+    = f.action :cancel, button_html: {class: "pjax-container"}
+
+
+- content_for :left_content do
+  %ul
+    Available Tasks
+    =select "Subtask","New", Task.all.collect {|p| [ p.title, p.id ] }, { :include_blank => true }
+    - for task in @tasks
+      %li.pjax_container= link_to task.title, new_task_path(task_id: task), remote: true
+- content_for :rightbar do
+  =render partial: 'details_container'

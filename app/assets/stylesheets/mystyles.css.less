@@ -1,0 +1,78 @@
+.task_list {
+  border: 1px solid red;
+  list-style: none;
+  margin-left: 0;
+  padding: 3px;
+  border-radius: 4px;
+}
+.task_list_details {
+  margin-left: 0;
+  list-style: none;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 5px;
+  li.toggle {
+    padding-left: 15px;
+  }
+}
+.triangle {
+  content: '';
+  display:inline;
+  border: 5px solid transparent;
+  border-top: 5px solid black;
+  float: left;
+  height: 5px;
+  margin-top: 7px;
+  margin-right: 3px;
+  cursor: pointer;
+}
+
+.toggle {
+  display:none;
+}
+
+.subtasks {
+  float:right;
+  clear:both;
+  margin-right: 80px;
+  ol {
+    list-style: none;
+    li > label {
+    color: black;
+    }
+  }
+}
+
+.remove {
+  cursor: pointer;
+}
+
+.span6 {
+  border: 1px solid green;
+}
+.formtastic fieldset.inputs,.formtastic fieldset.actions{
+  margin: 5px;
+}
+.formtastic fieldset.inputs ol > li.input.boolean.input input[type="checkbox"] {
+  margin-left: 0px;
+}
+
+.formtastic fieldset.inputs ol > li.input.stringish input[type="text"] {
+  float: left;
+  clear: both;
+}
+
+.formtastic fieldset.actions ol {
+  margin-left: 5px;
+}
+
+.formtastic fieldset.inputs ol > li.input.text textarea,
+{
+  height: 100px;
+  max-width: 350px;
+  float: left;
+  clear: both;
+}
+.formtastic fieldset.inputs > ol > li.input label.label {
+  width: inherit,
+}
