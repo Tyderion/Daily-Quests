@@ -28,12 +28,13 @@ class Task < ActiveRecord::Base
   end
 
   def add_subtask(task)
+
     self.subtasks.push Subtask.new(task: self, subtask: task) if subtask_valid?(task)
   end
 
   def subtask_valid?(other)
     if other.id == self.id || !type_valid?(other)
-      false
+      return false
     else
       subtasks_valid?(other.subtasks)
     end

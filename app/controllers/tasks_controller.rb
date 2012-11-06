@@ -31,12 +31,12 @@ class TasksController < ApplicationController
     subtasks = params[:task][:subtasks]
     params[:task].delete :subtasks
     type_error = false
-    if params[:task][:type] == ""
+
+    if params[:task][:type].empty?
       params[:task][:type] = "Task"
       type_error = true
-    #else
-      #params[:task][:type] = TaskType.name_for params[:task][:type].to_i
-
+    else
+      params[:task][:type] = TaskType.name_for params[:task][:type].to_i
     end
     @task = Task.new(params[:task])
     @tasks = Task.where(private: false)
@@ -44,6 +44,7 @@ class TasksController < ApplicationController
 
     if @task.valid? && !type_error
       @task.save
+      debugger
       unless subtasks.nil?
         #TODO: Is the sequence of elements always the same in a hash?
         subtasks.each do |k,e|
