@@ -1,4 +1,5 @@
 = semantic_form_for @task, remote: true do |f|
+  -#Todo: Enable removing of elements from the list of subtasks
   .subtasks
     %h4 Subtasks
     %ol.droppable.ui-widget-content.sortable#Target_sortable
@@ -19,9 +20,8 @@
 - content_for :left_content do
   %ul
     Available Tasks
-    =#select "Subtask","New", Task.all.collect {|p| [ p.title, p.id ] }, { :include_blank => true }
+    -#Todo: Make this list searchable... or something like that :)
     - for task in @tasks
       = render partial: 'subtask_input', locals: { task: task }
-      /%li.pjax_container.draggable.ui-widget-content=# link_to task.title, new_task_path(task_id: task), remote: true
 - content_for :rightbar do
   =render partial: 'details_container'
