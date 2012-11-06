@@ -5,6 +5,29 @@ $ ->
   #$('input').pjax('[data-pjax-container]')
 
 
+  $('html').on
+    "ajax:error": (xhr, error) ->
+      errormessages = $.parseJSON(error["responseText"])
+      console.log errormessages
+      $('.inline_error').remove()
+      $('label[for^="task"]').css "color", "black"
+
+      $.each errormessages, (index, value) ->
+        add_error
+          title: index
+          error: value
+  , "#new_task"
+
+  add_error= (error) ->
+    console.log error
+    console.log error["error"]
+    console.log $("#task_#{error["title"]}_input")
+    li_element = $("#task_#{error["title"]}_input")
+    $('label', li_element).css "color", "red"
+    $(li_element).append "<div class='inline_error'> #{error["error"]} </div>"
+
+
+
 
   $('html').on
     click: ->

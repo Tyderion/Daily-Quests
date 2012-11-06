@@ -27,15 +27,23 @@ class TasksController < ApplicationController
   end
 
   def create
-    debugger
-    @tasks = Task.where(private: false)
+    valid = true
     subtasks = params[:task][:subtasks]
     params[:task].delete :subtasks
-    #params[:task][:private] = params[:task][:parivate]==1 ? true : false
-    params[:task].delete :type if params[:task][:type] == ""
-    params[:task][:type] = TaskType.name_for params[:task][:type].to_i
+    type_error = false
+    if params[:task][:type] == ""
+      params[:task][:type] = "Task"
+      type_error = true
+    #else
+      #params[:task][:type] = TaskType.name_for params[:task][:type].to_i
+
+    end
     @task = Task.new(params[:task])
-    if @task.save
+    @tasks = Task.where(private: false)
+
+
+    if @task.valid? && !type_error
+      @task.save
       unless subtasks.nil?
         #TODO: Is the sequence of elements always the same in a hash?
         subtasks.each do |k,e|
@@ -45,8 +53,16 @@ class TasksController < ApplicationController
       end
       redirect_to @task, :notice => "Successfully created task."
     else
+      if type_error
+        @task.errors.add :type, "Can't be blank."
+      end
       params[:task][:subtasks] = subtasks
-      render :action => 'new'
+      respond_to do |format|
+        format.json {
+          render json:  @task.errors.to_json,
+            content_type: "json", status: 406
+        }
+      end
     end
   end
 

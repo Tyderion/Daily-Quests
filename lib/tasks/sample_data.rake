@@ -9,6 +9,7 @@ namespace :db do
 
   def make_type
     t = Task.new
+    #t.type = "Undefined"
     t.type = "Task"
     t.type = "Quest"
     t.type = "Questsequence"

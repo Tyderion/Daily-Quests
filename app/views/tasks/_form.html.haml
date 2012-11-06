@@ -1,12 +1,13 @@
-= semantic_form_for @task do |f|
+= semantic_form_for @task, remote: true do |f|
   .subtasks
     %h4 Subtasks
     %ol.droppable.ui-widget-content.sortable#Target_sortable
   = f.inputs do
-    = f.input :title
-    = f.input :description
-    = f.input :private
-    = f.input :type, as: :select, collection: TaskType.all
+    = f.input :title, input_html: {class: "task_form"}
+    = f.input :description, input_html: {class: "task_form"}
+    = f.input :private, input_html: {class: "task_form"}
+    -# tasktypes = TaskType.first
+    = f.input :type, as: :select, collection: TaskType.all #- tasktypes[0]
 
 
 
