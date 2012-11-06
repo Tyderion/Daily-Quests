@@ -27,6 +27,7 @@ class TasksController < ApplicationController
   end
 
   def create
+    debugger
     @tasks = Task.where(private: false)
     subtasks = params[:task][:subtasks]
     params[:task].delete :subtasks
@@ -36,6 +37,7 @@ class TasksController < ApplicationController
     @task = Task.new(params[:task])
     if @task.save
       unless subtasks.nil?
+        #TODO: Is the sequence of elements always the same in a hash?
         subtasks.each do |k,e|
 
           @task.add_subtask(Task.find(e))

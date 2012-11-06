@@ -8,9 +8,9 @@
         .span2=render 'shared/sidebar'
         .span9
           .row-fluid
-            .span3
+            .span2
               =yield(:left_content)
-            .span6{:"data-pjax-container" => ""}
+            .span7{:"data-pjax-container" => ""}
               - flash.each do |name, msg|
                 = content_tag :div, msg, :id => "flash_#{name}"
 

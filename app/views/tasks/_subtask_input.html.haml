@@ -1,0 +1,5 @@
+%li.ui-widget-content.draggable.ui-state-default
+  /%span.remove x
+  %label{for: "subtask#{task.id}"}
+    %a{:"data-remote" => 'true', href: "/tasks/new?task_id=#{task.id}"}= task.title
+  %input{ id: "subtask#{task.id}", type: 'hidden', name: "task[subtasks[#{task.id}]]", value: task.id }

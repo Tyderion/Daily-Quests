@@ -1,7 +1,7 @@
 = semantic_form_for @task do |f|
   .subtasks
     %h4 Subtasks
-    %ol
+    %ol.droppable.ui-widget-content.sortable#Target_sortable
   = f.inputs do
     = f.input :title
     = f.input :description
@@ -18,8 +18,9 @@
 - content_for :left_content do
   %ul
     Available Tasks
-    =select "Subtask","New", Task.all.collect {|p| [ p.title, p.id ] }, { :include_blank => true }
+    =#select "Subtask","New", Task.all.collect {|p| [ p.title, p.id ] }, { :include_blank => true }
     - for task in @tasks
-      %li.pjax_container= link_to task.title, new_task_path(task_id: task), remote: true
+      = render partial: 'subtask_input', locals: { task: task }
+      /%li.pjax_container.draggable.ui-widget-content=# link_to task.title, new_task_path(task_id: task), remote: true
 - content_for :rightbar do
   =render partial: 'details_container'

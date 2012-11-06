@@ -19,6 +19,18 @@ $ ->
       $(this).parent().remove()
   , '.remove'
 
+  $('.draggable').draggable
+    connectToSortable: "#Target_sortable",
+    helper: "clone",
+    revert: "invalid"
+  $('.sortable').sortable()
+  $( ".sortable" ).disableSelection()
+  $('.droppable').droppable
+    drop: (event, ui) ->
+      console.log event
+
+
+
 
   $('html').on
     click: (event) ->
