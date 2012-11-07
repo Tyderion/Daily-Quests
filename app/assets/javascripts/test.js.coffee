@@ -17,12 +17,19 @@ $ ->
           error: value
   , "#new_task"
 
+  $('html').on
+    click: ->
+      $(this).closest('li').remove()
+  , "#delete_icon"
+
   add_error= (error) ->
     li_element = $("#task_#{error["title"]}_input")
     $('label', li_element).css "color", "red"
     $(li_element).append "<div class='inline_error'> #{error["error"]} </div>"
 
-
+  grandparent = $('#subtask_list').parent().parent()
+  console.log grandparent
+  $('#subtask_list').detach().appendTo(grandparent)
 
 
   $('html').on
@@ -46,23 +53,9 @@ $ ->
   $( ".sortable" ).disableSelection()
   $('.droppable').droppable
     drop: (event, ui) ->
-      console.log event
+      console.log $('img', ui.draggable).removeClass("hidden")
+      console.log $('img', ui.draggable).removeClass("hidden")
 
-
-
-
-  $('html').on
-    click: (event) ->
-      console.log event
-      console.log $('#Subtask_New option:selected').html()
-      $('.subtasks ol').append "<li><span class='remove'>x</span>
-          <label for='subtask#{$('.subtasks ol li').length}'>
-          <a data-remote='true' href='/tasks/new?task_id=#{$('#Subtask_New option:selected').val()}' > #{$('#Subtask_New option:selected').html()}  </a>
-            </label>
-          <input id='subtask#{$('.subtasks ol li').length}' type='hidden'
-            name=task[subtasks[#{$('.subtasks ol li').length}]] value='#{$('#Subtask_New option:selected').val()}'>
-          </li>"
-  , '#Subtask_New_chzn div ul .active-result'
 
   # $("html").pjax(".test a").on "pjax:success", (data, xhr, response) ->
   #   $.pjax

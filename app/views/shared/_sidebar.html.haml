@@ -1,6 +1,6 @@
 .well.sidebar-nav
   %ul.nav.nav-list
     %li.nav-header Sidebar
-    %li= link_to t('task.new'), new_task_path
+    %li= link_to t('task.new'), new_task_path, remote: true
     %li= link_to "Link 2", "/path2"
     %li= link_to "Link 3", "/path3"

@@ -15,6 +15,10 @@
     padding-left: 15px;
   }
 }
+
+.icon {
+  cursor: pointer;
+}
 .triangle {
   content: '';
   display:inline;
@@ -31,11 +35,7 @@
   display:none;
 }
 
-ol.droppable {
-  border: 2px solid red;
-  width: 150px;
-  height: 400px;
-}
+
 ul > li.draggable{
   list-style: none;
   margin: 5px 0px;
@@ -47,18 +47,38 @@ ul > li.draggable{
   clear: both;
 }
 
+#new_task > fieldset {
+  position: relative;
+  ol {
+    width: 45%;
+  }
+}
 
-.subtasks {
-  float:right;
-  clear:both;
-  margin-right: 80px;
+
+#center_content > #new_task >fieldset >div > ol {
+  width: 85%;
+}
+#subtask_list {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 45%;
+  height: 93%;
   ol {
     list-style: decimal;
+    height: 85%;
+    width: 100%;
     li > label {
     color: black;
     }
   }
 }
+
+
+
+
+
+
 
 .draggable > label {
   display: inline;
@@ -71,6 +91,17 @@ ul > li.draggable{
 .span6 {
   //border: 1px solid green;
 }
+.formtastic fieldset.inputs > ol > li.input label.label abbr {
+  right: 12px;
+  top: 3px;
+}
+.formtastic fieldset.inputs > ol > li.input label.label {
+  float: left;
+  text-align: left;
+  width: auto;
+
+}
+
 .formtastic fieldset.inputs,.formtastic fieldset.actions{
   margin: 5px;
 }
@@ -94,6 +125,24 @@ ul > li.draggable{
   float: left;
   clear: both;
 }
-.formtastic fieldset.inputs > ol > li.input label.label {
-  width: inherit,
-}
+
+
+// //borders
+// #new_task > fieldset {
+//   border: 2px solid red;
+//   position: relative;
+
+//   ol {
+//     border: 2px solid green;
+//     width: 45%;
+//     li {
+//       border: 2px solid blue;
+//     }
+//   }
+// }
+// #subtask_list {
+//   border: 2px solid pink;
+// }
+// ol.droppable {
+//   border: 2px solid red;
+// }

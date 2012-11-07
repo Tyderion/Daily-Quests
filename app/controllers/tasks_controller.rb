@@ -1,9 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :get_detail_task
 
-  def get_detail_task
-    @task_detail = Task.find(params[:task_id]) if params[:task_id]
-  end
+
   def index
     @tasks = Task.all
     # if params[:private]
@@ -13,6 +10,14 @@ class TasksController < ApplicationController
     # end
     respond_to do |format|
       format.html
+      format.js
+    end
+  end
+
+  def details_container
+    #debugger
+    @task_detail = Task.find(params[:id])
+    respond_to do |format|
       format.js
     end
   end

@@ -1,15 +1,15 @@
 = semantic_form_for @task, remote: true do |f|
   -#Todo: Enable removing of elements from the list of subtasks
-  .subtasks
-    %h4 Subtasks
-    %ol.droppable.ui-widget-content.sortable#Target_sortable
+
   = f.inputs do
     = f.input :title, input_html: {class: "task_form"}
     = f.input :description, input_html: {class: "task_form"}
     = f.input :private, input_html: {class: "task_form"}
     -# tasktypes = TaskType.first
     = f.input :type, as: :select, collection: TaskType.all #- tasktypes[0]
-
+    .subtasks#subtask_list
+      %h4 Subtasks
+      %ol.droppable.ui-widget-content.sortable#Target_sortable
 
 
   = f.actions do
@@ -18,10 +18,4 @@
 
 
 - content_for :left_content do
-  %ul
-    Available Tasks
-    -#Todo: Make this list searchable... or something like that :)
-    - for task in @tasks
-      = render partial: 'subtask_input', locals: { task: task }
-- content_for :rightbar do
-  =render partial: 'details_container'
+  = render 'subtasks_list'

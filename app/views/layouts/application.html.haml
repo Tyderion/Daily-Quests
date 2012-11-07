@@ -7,17 +7,17 @@
       %div.row-fluid
         .span2=render 'shared/sidebar'
         .span9
-          .row-fluid
-            .span2
+          .row-fluid#inner
+            .span2#left_content
               =yield(:left_content)
-            .span7{:"data-pjax-container" => ""}
+            .span7#center_content{:"data-pjax-container" => ""}
               - flash.each do |name, msg|
                 = content_tag :div, msg, :id => "flash_#{name}"
 
               -if show_title?
                 %h1= yield(:title)
               = yield
-            .span3.rightbar
+            .span3.rightbar#right_content
               =yield(:rightbar)
       =render 'shared/footer'
 

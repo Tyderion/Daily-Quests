@@ -1,0 +1,7 @@
+%ul
+  Available Tasks
+  -#Todo: Make this list searchable... or something like that :)
+  - for task in @tasks
+    = render partial: 'subtask_input', locals: { task: task }
+  - content_for :rightbar do
+    =render partial: 'details_container'
