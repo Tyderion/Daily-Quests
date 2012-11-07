@@ -14,7 +14,7 @@ class TasksController < ApplicationController
     end
   end
 
-  def details_container
+  def details
     #debugger
     @task_detail = Task.find(params[:id])
     respond_to do |format|
