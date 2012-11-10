@@ -1,7 +1,7 @@
 $('#right_content').html "<%= escape_javascript render partial: 'details_container' %>"
 $('#center_content').html "<%= escape_javascript render partial: 'form' %>"
-$('#left_content').html "<%= escape_javascript render partial: 'subtasks_list' %>"
-#$('#inner').prepend "<%= escape_javascript render partial: 'details_container' %>"
+$('#subtasks_list').remove()
+$('#left_content').append "<%= escape_javascript render partial: 'subtasks_list' %>"
 console.log $('#subtask_list')
 
 $('.draggable').draggable

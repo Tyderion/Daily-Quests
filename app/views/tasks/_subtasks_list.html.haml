@@ -1,6 +1,5 @@
 =# will_paginate @tasks
-%input#search_tasks{value: params[:search]}
-%ul
+%ul#subtasks_list
   Available Tasks
   -#Todo: Make this list searchable... or something like that :)
   - for task in @tasks

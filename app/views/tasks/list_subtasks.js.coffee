@@ -1,2 +1,2 @@
-$('#left_content').html "<%= escape_javascript render partial: 'subtasks_list' %>"
-$('#search_tasks').focus().caretToEnd()
+$('#subtasks_list').remove()
+$('#left_content').append "<%= escape_javascript render partial: 'subtasks_list' %>"
