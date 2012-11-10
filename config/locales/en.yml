@@ -8,3 +8,4 @@ en:
     private: "Private"
     public: "Public"
     new: "New Task"
+    search: "Type to start searching"
