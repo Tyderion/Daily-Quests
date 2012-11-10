@@ -2,7 +2,7 @@ class TasksController < ApplicationController
 
 
   def index
-    @tasks = Task.all
+    @tasks = Task.where(private: false)#.paginate(:page => params[:page], per_page: 5)
     # if params[:private]
     #   @task.private = @task.public?
     #   @task.save
@@ -10,6 +10,13 @@ class TasksController < ApplicationController
     # end
     respond_to do |format|
       format.html
+      format.js
+    end
+  end
+
+  def list_subtasks
+    @tasks = Task.where("private = ? and title LIKE ?",false, "%#{params[:search]}%") #.paginate(:page => params[:page], per_page: 5)
+    respond_to do |format|
       format.js
     end
   end
@@ -24,7 +31,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    @tasks = Task.where(private: false)
+    @tasks = Task.where(private: false)#.paginate(:page => params[:page], per_page: 5)
     respond_to do |format|
       format.html
       format.js
@@ -44,12 +51,11 @@ class TasksController < ApplicationController
       params[:task][:type] = TaskType.name_for params[:task][:type].to_i
     end
     @task = Task.new(params[:task])
-    @tasks = Task.where(private: false)
+    @tasks = Task.where(private: false).paginate(:page => params[:page], per_page: 5)
 
 
     if @task.valid? && !type_error
       @task.save
-      debugger
       unless subtasks.nil?
         #TODO: Is the sequence of elements always the same in a hash?
         subtasks.each do |k,e|

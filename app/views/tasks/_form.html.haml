@@ -1,5 +1,4 @@
 = semantic_form_for @task, remote: true do |f|
-  -#Todo: Enable removing of elements from the list of subtasks
 
   = f.inputs do
     = f.input :title, input_html: {class: "task_form"}
@@ -18,4 +17,5 @@
 
 
 - content_for :left_content do
+
   = render 'subtasks_list'
