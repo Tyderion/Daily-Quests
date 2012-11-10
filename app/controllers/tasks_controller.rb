@@ -16,12 +16,14 @@ class TasksController < ApplicationController
 
   def list_subtasks
     @tasks = Task.where("private = ? and title LIKE ?",false, "%#{params[:search]}%").order("title ASC")
-    begins_with = /^#{params[:search]}.*$/i
-    word_begins_with = /^.* #{params[:search]}.*$/i
-    first = @tasks.find_all{|item| item.title =~ begins_with }
-    second = @tasks.find_all{|item| item.title =~ word_begins_with }
-    last = @tasks.to_a - first - second
-    @tasks = first + second + last
+    unless params[:search].empty?
+      begins_with = /^#{params[:search]}.*$/i
+      word_begins_with = /^.* #{params[:search]}.*$/i
+      first = @tasks.find_all{|item| item.title =~ begins_with }
+      second = @tasks.find_all{|item| item.title =~ word_begins_with }
+      last = @tasks.to_a - first - second
+      @tasks = first + second + last
+    end
     respond_to do |format|
       format.js
     end
