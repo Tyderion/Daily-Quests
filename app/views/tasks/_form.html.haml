@@ -8,7 +8,7 @@
     = f.input :type, as: :select, collection: TaskType.all #- tasktypes[0]
     .subtasks#subtask_list
       %h4 Subtasks
-      %ol.droppable.ui-widget-content.sortable#Target_sortable
+      %ol.droppable.ui-widget-content.sortable#subtask_sortable
 
 
   = f.actions do

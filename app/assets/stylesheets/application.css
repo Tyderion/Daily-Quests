@@ -13,6 +13,7 @@
  *= require formtastic-plus-bootstrap/responsive
  *= require chosen
  *= require jquery.ui.all
+ *= require jquery-ui-1.9.1.custom.css
  *= require_self
  *= require_tree .
  */

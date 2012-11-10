@@ -1,7 +1,5 @@
 =# will_paginate @tasks
 %ul#subtasks_list
-  Available Tasks
-  -#Todo: Make this list searchable... or something like that :)
   - for task in @tasks
     = render partial: 'subtask_input', locals: { task: task }
 

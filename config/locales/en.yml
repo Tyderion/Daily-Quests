@@ -8,4 +8,5 @@ en:
     private: "Private"
     public: "Public"
     new: "New Task"
-    search: "Type to start searching"
+    search: "Type to start filtering"
+    available: "Available Tasks"

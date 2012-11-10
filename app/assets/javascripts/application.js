@@ -14,6 +14,7 @@
 //= require jquery.ui.all
 //= require jquery_ujs
 //= require jquery.caret
+//= require jquery.throttle
 //= require chosen-jquery
 //= require twitter/bootstrap
 //= require_tree .

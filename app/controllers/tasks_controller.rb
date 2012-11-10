@@ -48,6 +48,7 @@ class TasksController < ApplicationController
 
   def create
     valid = true
+    debugger
     subtasks = params[:task][:subtasks]
     params[:task].delete :subtasks
     type_error = false
@@ -77,10 +78,13 @@ class TasksController < ApplicationController
         @task.errors.add :type, "Can't be blank."
       end
       params[:task][:subtasks] = subtasks
+
       respond_to do |format|
         format.json {
-          render json:  @task.errors.to_json,
-            content_type: "json", status: 406
+          render json:
+          { errors: @task.errors.to_json,
+            subtasks: params[:task][:subtasks].to_json
+            }, content_type: "json", status: 406
         }
       end
     end

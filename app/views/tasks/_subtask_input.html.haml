@@ -1,7 +1,9 @@
-%li.ui-widget-content.draggable.ui-state-default
+%li.ui-widget-content.draggable.ui-state-default.subtask
   = image_tag 'icons/remove.png', size: '16x16', title: "Remove", alt: "Remove", class: "calendar_icons hidden icon", id: "delete_icon"
   %label{for: "subtask#{task.id}"}
     %a{:"data-remote" => 'true', href: "/tasks/#{task.id}/details"}= task.title
+  -#Todo: Fix the name of the input...
   %input{ id: "subtask#{task.id}", type: 'hidden', name: "task[subtasks[#{task.id}]]", value: task.id }
+  .ui-icon.ui-icon-arrowthick-1-e
 
 

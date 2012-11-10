@@ -28,6 +28,10 @@ namespace :db do
       tasks << Task.create(title: "Remove #{c}", description: "Gently pop the key off with the tip of a knife", private: false, type: "Task")
     end
     Task.find(2).add_subtasks(tasks)
+    ('a'..'z').each do |c|
+      tasks << Task.create(title: "Restore #{c}", description: "Gently put the key back onto the keybord. Mind the correct place.", private: false, type: "Task")
+    end
+    Task.find(4).add_subtasks(tasks)
 
   end
 
