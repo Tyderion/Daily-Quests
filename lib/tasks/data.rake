@@ -45,12 +45,23 @@ def make_tasks_with_subtasks
 end
 
 # Create Tasks recursively by "walking through" the parsed YAML-Hash/Array construct
+@named_tasks = {}
 def make_task(task)
   new_task = []
   #If it is a simple task
   if task['for'].nil?
     #Create it
-    new_task << Task.create(title: task['title'], description: task['description'], private: false, type: "Task")
+    if task['name']
+      #If it has a name, store it
+      new_task << Task.create(title: task['title'], description: task['description'], private: false, type: "Task")
+      @named_tasks["#{task['name']}"] = new_task[-1]
+    elsif task['named']
+      #If it is a named task, retrieve it
+      new_task << @named_tasks[task['named']]
+    else
+      # Just create a task
+      new_task << Task.create(title: task['title'], description: task['description'], private: false, type: "Task")
+    end
     unless task['subtasks'].nil?
       #Add subtasks if available
       task['subtasks'].each do |sub|
