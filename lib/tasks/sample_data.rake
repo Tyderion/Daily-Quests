@@ -14,6 +14,13 @@ namespace :db do
     t.type = "Questsequence"
   end
 
+  def make_tasks_with_subtasks
+
+
+
+
+  end
+
   def make_tasks
     names = { "Clean Keyboard" => "How to clean your Keyboard",
               "Remove Keys" => "Take away the keys carefully with a knife",

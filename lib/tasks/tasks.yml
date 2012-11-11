@@ -1,0 +1,21 @@
+- title: "Clean Keyboard"
+  description: "How to clean your Keyboard"
+  subtasks:
+    - title: "Remove Keys"
+      description: "Take away the keys carefully with a knife"
+      subtasks:
+        - for: "a-z"
+          title: "Remove #{for}"
+          description: "Gently pop the key '#{for}' off with the tip of a knife"
+          subtasks:
+            - title: "Test"
+              description: "Test"
+    - title: "Vacuum keyboard"
+      description:  "Remove all the food which is under the keys"
+    - title: "Restore Keys"
+      description:  "Put the keys back again, mind the layout ;)"
+      subtasks:
+        - for: "a-z"
+          title: "Restore #{for}"
+          description: "Gently put the key '#{for}' back onto the keybord. Mind the correct place."
+
