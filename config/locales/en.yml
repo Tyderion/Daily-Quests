@@ -8,12 +8,14 @@ en:
     public: "Public"
     new: "New Task"
     edit: "Edit Task"
+    destroy: "Delete Task"
     empty:
       title: "Empty Title"
       description: "Empty Description"
       type: "No Type"
     search: "Type to start filtering"
     available: "Available Tasks"
+    add_to_subtask: "Add Task to Subtasks"
     preview:
       button: "Preview Task"
       title: "Task Preview"

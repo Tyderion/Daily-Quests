@@ -1,5 +1,6 @@
 DailyQuests::Application.routes.draw do
-  resources :tasks
+  resources :tasks,
+    except: [:show]
 
   get "tasks/:id/details", to: "Tasks#details"
   get "subtasks", to: "Tasks#list_subtasks"

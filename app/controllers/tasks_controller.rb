@@ -2,12 +2,7 @@ class TasksController < ApplicationController
 
 
   def index
-    @tasks = Task.where(private: false)#.paginate(:page => params[:page], per_page: 5)
-    # if params[:private]
-    #   @task.private = @task.public?
-    #   @task.save
-    #   flash.now[:notice] = "Changed task from #{ @task.not_visibility } to #{ @task.visibility }"
-    # end
+    @tasks = Task.where(private: false)
     respond_to do |format|
       format.html
       format.js
@@ -65,9 +60,7 @@ class TasksController < ApplicationController
     if @task.valid? && !type_error
       @task.save
       unless subtasks.nil?
-        #TODO: Is the sequence of elements always the same in a hash?
         subtasks.each do |k,e|
-
           @task.add_subtask(Task.find(e))
         end
       end
@@ -125,10 +118,15 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_url, :notice => "Successfully destroyed task."
+    subtasks = Subtask.where("task_id = ? or subtask_id = ?", params[:id], params[:id])   #.select("id")
+    subtasks.each { |s| s.destroy }
+    #redirect_to tasks_url, :notice => "Successfully destroyed task."
+    respond_to do |format|
+      format.json {
+        render json: { message: "Successfully destroyed task"},
+        content_type: "json", status: :ok
+      }
+    end
   end
 
-  def show
-    @task = Task.find(params[:id])
-  end
 end

@@ -9,7 +9,7 @@ class Subtask < ActiveRecord::Base
   belongs_to :subtask, class_name: "Task"
 
 
-  delegate :id, :title, :description, :subtasks, :title=, :description=, :add_subtask, :add_subtasks,
+  delegate :id,  :title, :description, :subtasks, :title=, :description=, :add_subtask, :add_subtasks,
            :subtask_valid?, :public?, :private?, :type, :type=,
            to: :subtask
 
@@ -19,6 +19,21 @@ class Subtask < ActiveRecord::Base
     #   record.task.subtasks << record
     # end
   end
+
+  def destroy
+    unless new_record?
+      connection.delete(
+        "DELETE FROM #{self.class.quoted_table_name} " +
+        "WHERE #{connection.quote_column_name(self.class.primary_key)} = #{self[:id]}",
+        "#{self.class.name} Destroy"
+      )
+    end
+
+    @destroyed = true
+    freeze
+  end
+
+
 
 
 end
