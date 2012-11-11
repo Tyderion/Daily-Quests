@@ -42,6 +42,7 @@ class TasksController < ApplicationController
   end
 
   def create
+    debugger
     valid = true
     subtasks = params[:task][:subtasks]
     params[:task].delete :subtasks

@@ -29,6 +29,7 @@ $ ->
       element = $(this).closest('li').clone()
       window.subtask_dropped element
       $('#subtask_sortable').append element
+      window.adjust_inputs()
 
   , ".subtask > .ui-icon-arrowthick-1-e"
   $('html').on
@@ -39,16 +40,13 @@ $ ->
 
 
   window.timer = 0
-  # $(window).on
-  #   resize: ->
-  #     #As long as we're resizing, do not resize the list
-  #     $.debounce 250, ->
-  #       console.log "bounced...!"
-  #       $('#subtasks_list').height $(window).height()*2/3
 
   $(window).resize $.debounce 250, ->
     $('#subtasks_list').height $(window).height()*2/3
 
+  window.adjust_inputs= ->
+    $('input', e).attr('id', "subtask#{$(e).index()}") for e in $('#subtask_sortable >  li')
+    $('input', e).attr('name', "task[subtasks[#{$(e).index()}]]") for e in $('#subtask_sortable >  li')
 
 
 
@@ -101,13 +99,17 @@ $ ->
     connectToSortable: "#subtask_sortable",
     helper: "clone",
     revert: "invalid"
-  $('.sortable').sortable()
+  $('.sortable').sortable
+    update: (event, ui) ->
+      adjust_inputs()
   $( ".sortable" ).disableSelection()
   $('.droppable').droppable
     drop: (event, ui) ->
       window.subtask_dropped  ui.draggable
+      adjust_inputs()
 
   window.subtask_dropped = (ui) ->
     $('img', ui).removeClass("hidden")
     $('.ui-icon-arrowthick-1-e', ui).hide()
+  window.adjust_inputs()
 

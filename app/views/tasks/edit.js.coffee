@@ -1,6 +1,6 @@
 $('#right_content').html "<%= escape_javascript render partial: 'details_container' %>"
 $('#center_content').html "<%= escape_javascript render partial: 'form' %>"
-$('#left_content').html "<%= escape_javascript render partial: 'left_content' %>"
+#$('#left_content').html "<%= escape_javascript render partial: 'left_content' %>"
 document.title =  "<%= t('task.new') %>"
 console.log $('#task_type_chzn > a > span').html "<%= @task.type %>"
 $('#subtask_sortable > li').removeClass('draggable')
@@ -12,16 +12,16 @@ $('.draggable').draggable
   revert: "invalid"
 $('#subtask_list > ol >  li').each (iindex, element)->
   window.subtask_dropped element
-$('.sortable').sortable()
+window.adjust_inputs()
+$('.sortable').sortable
+  update: (event, ui) ->
+    adjust_inputs()
 $( ".sortable" ).disableSelection()
 $('.droppable').droppable
   drop: (event, ui) ->
-    console.log $('img', ui.draggable).removeClass("hidden")
-    console.log $('.ui-icon-arrowthick-1-e', ui.draggable).hide()
+    window.subtask_dropped  ui.draggable
+    window.adjust_inputs()
 $('select').chosen()
-
 $('#task_type_chzn > a > span').html "<%= @task.type %>"
 $('#task_type_chzn > a > span').css "color", "black"
-$(e).addClass('resul-selected') for e in $('#task_type_chzn > div > ul.chzn-results > li') when e.html() == "<%= @task.type %>"
-
-
+$(e).addClass('result-selected') for e in $('#task_type_chzn > div > ul.chzn-results > li') when e.html() == "<%= @task.type %>"

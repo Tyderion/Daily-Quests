@@ -17,3 +17,4 @@ $('.droppable').droppable
     console.log $('.ui-icon-arrowthick-1-e', ui.draggable).hide()
 $('select').chosen()
 
+
