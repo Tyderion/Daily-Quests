@@ -16,6 +16,8 @@
   = f.actions do
     = f.action :submit, button_html: {class: "pjax-container"}
     = f.action :cancel, button_html: {class: "pjax-container"}
+    %li.action.input_action#task_preview_action
+      .btn.btn-info=t('task.preview.button')
 
 
 - content_for :left_content do

@@ -48,7 +48,6 @@ class TasksController < ApplicationController
 
   def create
     valid = true
-    debugger
     subtasks = params[:task][:subtasks]
     params[:task].delete :subtasks
     type_error = false
@@ -93,6 +92,25 @@ class TasksController < ApplicationController
   def edit
     @task = Task.find(params[:id])
     @tasks = Task.where(private: false)
+  end
+
+  def preview
+    @task_detail = Task.new(
+            title: params[:task][:title],
+            description: params[:task][:description],
+            private: params[:task][:private].to_i == 0 ? false : true,
+            type: params[:task][:type]
+          )
+    @subtasks = []
+    unless params[:task]['subtasks'].nil?
+      params[:task]['subtasks'].each do |sub|
+        @subtasks << Task.find(sub.to_i)
+      end
+    end
+    respond_to do |format|
+      format.js
+    end
+
   end
 
   def update

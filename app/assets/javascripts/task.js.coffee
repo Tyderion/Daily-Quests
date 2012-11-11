@@ -7,6 +7,25 @@ $ ->
   ,"#search_tasks"
   $('html').on
     click: ->
+      subtasks = []
+      $('#subtask_sortable > li').each (i, e) ->
+        subtasks.push $('input', e).val()
+      $.ajax
+        url: '/task/preview'
+        type: "get"
+        dataType: 'script'
+        data:
+          task:
+            title: $('#task_title').val()
+            description: $('#task_description').val()
+            private: $('#task_private_input > input').val()
+            type: $('#task_type_chzn > a > span').html()
+            subtasks: subtasks
+
+
+  , "#task_preview_action"
+  $('html').on
+    click: ->
       element = $(this).closest('li').clone()
       window.subtask_dropped element
       $('#subtask_sortable').append element

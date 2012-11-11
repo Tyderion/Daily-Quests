@@ -1,11 +1,19 @@
 %ul.task_list_details
   %li
     %div.triangle
-    %span= task.title
+    %span= task.title.empty? ? t('task.empty.title') : task.title
 
   /%li.test=# link_to @task.private? ? "Private" : "Public", tasks_path(task_id: @task, private: @task.private?)
   %li.toggle
-    %span= task.description
+    %table.table.table-condensed
+      %thead
+        %th Description
+        %th Visibility
+        %th Type
+      %tbody
+        %td= task.description.empty? ? t('task.empty.description') : task.description
+        %td= task.private? ? t('task.private') : t('task.public')
+        %td= task.type=="Select an Option" ? t('task.empty.type') : task.type
     -task.subtasks.order("position_in_task ASC").each do |i|
       =render partial: 'details', locals: {task: i}
 

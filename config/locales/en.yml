@@ -1,6 +1,5 @@
 # Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
+# See https:/github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 en:
   application:
     name: "Daily Quests"
@@ -9,5 +8,12 @@ en:
     public: "Public"
     new: "New Task"
     edit: "Edit Task"
+    empty:
+      title: "Empty Title"
+      description: "Empty Description"
+      type: "No Type"
     search: "Type to start filtering"
     available: "Available Tasks"
+    preview:
+      button: "Preview Task"
+      title: "Task Preview"

@@ -3,6 +3,7 @@ DailyQuests::Application.routes.draw do
 
   get "tasks/:id/details", to: "Tasks#details"
   get "subtasks", to: "Tasks#list_subtasks"
+  get "task/preview", to: "Tasks#preview"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
