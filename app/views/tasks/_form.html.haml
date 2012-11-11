@@ -9,6 +9,8 @@
     .subtasks#subtask_list
       %h4 Subtasks
       %ol.droppable.ui-widget-content.sortable#subtask_sortable
+        - @task.subtasks.each do |task|
+          = render partial: 'subtask_input', locals: { task: task }
 
 
   = f.actions do

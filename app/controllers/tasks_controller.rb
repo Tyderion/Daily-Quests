@@ -92,6 +92,7 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
+    @tasks = Task.where(private: false)
   end
 
   def update

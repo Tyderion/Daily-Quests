@@ -12,6 +12,13 @@ $ ->
       $('#subtask_sortable').append element
 
   , ".subtask > .ui-icon-arrowthick-1-e"
+  $('html').on
+    click: ->
+      $.getScript $('a', this).attr 'href'
+
+  , ".subtask > .ui-icon-wrench"
+
+
   window.timer = 0
   # $(window).on
   #   resize: ->

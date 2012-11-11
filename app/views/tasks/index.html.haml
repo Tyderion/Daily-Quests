@@ -1,8 +1,11 @@
 - title "Tasks"
-%ul
-  - for task in @tasks
-    %li.pjax_container= link_to task.title,"/tasks/#{task.id}/details", remote: true
-%p.pjax_content= link_to "New Task", new_task_path
+/ %ul
+/   -# for task in @tasks
+/     %li.pjax_container=# link_to task.title,"/tasks/#{task.id}/details", remote: true
+/ %p.pjax_content=# link_to "New Task", new_task_path
 - content_for :rightbar do
   =render partial: 'details_container'
+
+- content_for :left_content do
+  = render 'left_content'
 

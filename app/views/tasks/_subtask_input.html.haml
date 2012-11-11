@@ -4,6 +4,9 @@
     %a{:"data-remote" => 'true', href: "/tasks/#{task.id}/details"}= task.title
   -#Todo: Fix the name of the input...
   %input{ id: "subtask#{task.id}", type: 'hidden', name: "task[subtasks[#{task.id}]]", value: task.id }
-  .ui-icon.ui-icon-arrowthick-1-e
+  .ui-icon.ui-icon-wrench{title: "Edit Task"}
+    = link_to "", edit_task_path(id: task), remote: true
+  .ui-icon.ui-icon-arrowthick-1-e{title: "Add Task to Subtasks"}
+
 
 
