@@ -36,7 +36,7 @@ class Task < ActiveRecord::Base
     if other.id == self.id || !type_valid?(other)
       return false
     else
-      subtasks_valid?(other.subtasks)
+      return subtasks_valid?(other.subtasks)
     end
   end
 
@@ -44,6 +44,12 @@ class Task < ActiveRecord::Base
     tasks.each do |element|
       add_subtask(element)
     end
+  end
+
+  def subtasks_valid(subtasks)
+    errors = []
+    subtasks.each { |sub| errors << sub.id unless subtask_valid?(sub) }
+    return errors
   end
 
   private

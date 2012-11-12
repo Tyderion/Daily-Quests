@@ -104,16 +104,11 @@ class TasksController < ApplicationController
     @subtasks = []
     @subtask_invalid = []
     unless params[:task]['subtasks'].nil?
-      params[:task]['subtasks'].each do |sub|
-        @subtasks << Task.find(sub.to_i)
-
-        unless @task_detail.id.nil?
-          #If the task exists, test the subtasks for validity
-          unless @task_detail.subtask_valid?(@subtasks.last)
-              sub = @subtasks.pop()
-              @subtask_invalid << sub.id unless @subtask_invalid.include? sub.id
-          end
-        end
+      #Grab all subtasks
+      @subtasks =  Task.find(params[:task]['subtasks'])
+      unless @task_detail.id.nil?
+        @subtask_invalid = @task_detail.subtasks_valid(@subtasks)
+        @subtasks.each {|s| @subtasks.delete(s) if @subtask_invalid.include? s.id}
       end
     end
 
