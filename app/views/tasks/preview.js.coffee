@@ -1,5 +1,5 @@
 
-$('#right_content').html "<%= escape_javascript render partial: 'details_container', locals: {no_subs: true} %>"
+$('#right_content').html "<%= escape_javascript render partial: 'details_container', locals: {subs: false} %>"
 
 $('li.toggle', '#right_content').append "<%= escape_javascript render partial: 'preview_subtasks' %>"
 $('li.toggle', '#right_content').first().css "display", "inline"

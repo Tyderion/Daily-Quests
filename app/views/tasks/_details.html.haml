@@ -15,5 +15,5 @@
         %td= task.private? ? t('task.private') : t('task.public')
         %td= task.type=="Select an Option" ? t('task.empty.type') : task.type
     -task.subtasks.order("position_in_task ASC").each do |i|
-      =render partial: 'details', locals: {task: i} if no_subs.nil?
+      =render partial: 'details', locals: {task: i, subs: subs} if subs
 

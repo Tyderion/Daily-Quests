@@ -1,8 +1,7 @@
 %div.task_details
   -if @task_detail
-    -debugger
     .well
       - flash.each do |name, msg|
         = content_tag :div, msg, :id => "flash_#{name}"
       %h2 Task Details
-      =render partial: 'details', locals: {task: @task_detail, no_subs: no_subs}
+      =render partial: 'details', locals: {task: @task_detail, subs: subs }
