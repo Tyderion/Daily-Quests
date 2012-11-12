@@ -6,6 +6,8 @@
     = f.input :private, input_html: {class: "task_form"}
     -# tasktypes = TaskType.first
     = f.input :type, as: :select, collection: TaskType.all #- tasktypes[0]
+    - if @task.id
+      =f.input :id, as: :hidden
     .subtasks#subtask_list
       %h4 Subtasks
       %ol.droppable.ui-widget-content.sortable#subtask_sortable

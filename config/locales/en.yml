@@ -9,6 +9,7 @@ en:
     new: "New Task"
     edit: "Edit Task"
     destroy: "Delete Task"
+    invalid_subtask: "Subtask Invalid"
     empty:
       title: "Empty Title"
       description: "Empty Description"

@@ -5,7 +5,7 @@ FactoryGirl.define do
     sequence(:description)  { |n| "Description #{n}"+Faker::Lorem.paragraph }
     sequence(:title) { |n| "Title #{2}" }
     private true
-    #type TaskType.id_for "Task"
+    type"Task"
   end
 
   # factory :subtask do
