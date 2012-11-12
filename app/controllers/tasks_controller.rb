@@ -102,13 +102,19 @@ class TasksController < ApplicationController
       @task_detail = Task.find(params[:task][:id])
     end
     @subtasks = []
-    @subtask_invalid = []
+    @invalid_subtasks = []
     unless params[:task]['subtasks'].nil?
       #Grab all subtasks
       @subtasks =  Task.find(params[:task]['subtasks'])
       unless @task_detail.id.nil?
-        @subtask_invalid = @task_detail.subtasks_valid(@subtasks)
-        @subtasks.each {|s| @subtasks.delete(s) if @subtask_invalid.include? s.id}
+        @invalid_subtasks = @task_detail.subtasks_valid(@subtasks)
+        #Somehow this doesn not remove them but when doing manually when debugging it works
+        @invalid_subtasks.each { |i| @subtasks.delete(Task.find(i)) }
+       #  @subtasks.each do |s|
+       #    if @invalid_subtasks.include? s.id
+       #      @subtasks.delete(s)
+       #    end
+       # end
       end
     end
 
