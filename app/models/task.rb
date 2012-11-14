@@ -1,5 +1,5 @@
 class Task < ActiveRecord::Base
-  attr_accessible :title, :description, :private, :type
+  attr_accessible :title, :description, :private, :type, :creator
   include RailsLookup
   lookup :task_type, as: :type
 
@@ -9,9 +9,24 @@ class Task < ActiveRecord::Base
 
   validates :title, presence: true
   validates :description, presence: true
-
+  validates :creator, presence: true
 
   has_many :subtasks
+
+    # Make it not generate an exception when trying to assign an empty type
+    # Don't know why, but TaskType.id_for "Unknown string" returns nil instead of new ID.
+    # Doesn't matter because that's also what it should be like xD
+    def type=(t)
+      if t.nil? or t.empty?
+        # self.type_id = 0
+        # self[:type] = nil
+        t = "Task"
+        self.type_id = TaskType.id_for t
+      else
+        #self[:type] = t
+        self.type_id = TaskType.id_for t
+      end
+    end
 
 
   def visibility
@@ -25,6 +40,9 @@ class Task < ActiveRecord::Base
 
   def public?
     not private?
+  end
+  def private?
+    private
   end
 
   def add_subtask(task)

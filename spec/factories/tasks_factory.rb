@@ -5,7 +5,8 @@ FactoryGirl.define do
     sequence(:description)  { |n| "Description #{n}"+Faker::Lorem.paragraph }
     sequence(:title) { |n| "Title #{2}" }
     private true
-    type"Task"
+    type_id 1
+    creator 1 # First User creates all
   end
 
   # factory :subtask do
