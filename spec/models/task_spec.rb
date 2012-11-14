@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: tasks
+#
+#  id          :integer          not null, primary key
+#  title       :string(255)
+#  description :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  private     :boolean
+#  creator     :integer
+#  type        :integer
+#
+
 require 'spec_helper'
 
 describe Task do
@@ -7,7 +21,6 @@ describe Task do
     t.type = "Quest"
     t.type = "Questsequence"
   end
-
   it "has a valid factory" do
     FactoryGirl.create(:task).should be_valid
   end
@@ -18,6 +31,9 @@ describe Task do
   end
   it "is invalid without a title" do
     FactoryGirl.build(:task, title: nil).should_not be_valid
+  end
+  it "is invalid without a Visiblity" do
+    FactoryGirl.build(:task, private: nil).should_not be_valid
   end
   it "has type 'Task' if none is set" do
     FactoryGirl.build(:task, type: nil).type.should == "Task"

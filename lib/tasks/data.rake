@@ -53,14 +53,14 @@ def make_task(task)
     #Create it
     if task['name']
       #If it has a name, store it
-      new_task << Task.create(title: task['title'], description: task['description'], private: false, type: "Task")
-      @named_tasks["#{task['name']}"] = new_task[-1]
+      new_task << Task.create(title: task['title'], description: task['description'], private: false, type: "Task", creator: 1)
+      @named_tasks["#{task['name']}"] = new_task[-1] #Todo: Move this into an if in the else
     elsif task['named']
       #If it is a named task, retrieve it
       new_task << @named_tasks[task['named']]
     else
       # Just create a task
-      new_task << Task.create(title: task['title'], description: task['description'], private: false, type: "Task")
+      new_task << Task.create(title: task['title'], description: task['description'], private: false, type: "Task", creator: 1)
     end
     unless task['subtasks'].nil?
       #Add subtasks if available
@@ -74,7 +74,7 @@ def make_task(task)
     regex = /\#\{for\}/i
     #Create a task for each option in the range
     range.each do |nr|
-      new_task << Task.create(title: task['title'].sub( regex, nr), description: task['description'].sub( regex, nr), private: false, type: "Task" )
+      new_task << Task.create(title: task['title'].sub( regex, nr), description: task['description'].sub( regex, nr), private: false, type: "Task", creator: 1 )
     end
     #If there is are even deeper subtasks
     unless task['subtasks'].nil?
