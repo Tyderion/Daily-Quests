@@ -40,15 +40,16 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
-
+  gem 'factory_girl_rails'
 end
 group :test do
-  gem "shoulda"
+  gem 'shoulda'
   gem 'database_cleaner'
   gem 'capybara'
-  gem 'factory_girl_rails'
   gem 'email_spec'
   gem 'faker'
+  gem 'guard-rspec'
+  gem 'launchy'
 end
 
 
@@ -80,5 +81,3 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
-
-gem "mocha", :group => :test
