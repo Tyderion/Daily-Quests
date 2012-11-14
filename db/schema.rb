@@ -11,25 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121102235010) do
-
-  create_table "adventurers", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-  end
-
-  add_index "adventurers", ["email"], :name => "index_adventurers_on_email", :unique => true
-  add_index "adventurers", ["reset_password_token"], :name => "index_adventurers_on_reset_password_token", :unique => true
+ActiveRecord::Schema.define(:version => 20121114133949) do
 
   create_table "heroes", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -44,29 +26,33 @@ ActiveRecord::Schema.define(:version => 20121102235010) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "name"
+    t.string   "last_name"
     t.string   "first_name"
   end
 
   add_index "heroes", ["email"], :name => "index_heroes_on_email", :unique => true
   add_index "heroes", ["reset_password_token"], :name => "index_heroes_on_reset_password_token", :unique => true
 
-  create_table "heros", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+  create_table "subtasks", :force => true do |t|
+    t.integer  "subtask_id"
+    t.integer  "task_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "position_in_task"
   end
 
-  add_index "heros", ["email"], :name => "index_heros_on_email", :unique => true
-  add_index "heros", ["reset_password_token"], :name => "index_heros_on_reset_password_token", :unique => true
+  create_table "task_types", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "tasks", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.boolean  "private"
+    t.integer  "creator"
+    t.integer  "type"
+  end
 
 end

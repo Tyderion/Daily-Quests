@@ -34,13 +34,16 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 group :test do
   gem 'shoulda'
   gem 'database_cleaner'
   gem 'capybara'
-  gem 'factory_girl_rails'
   gem 'email_spec'
+  gem 'faker'
+  gem 'guard-rspec'
+  gem 'launchy'
 end
 
 
@@ -50,8 +53,9 @@ end
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'jquery-ui-rails'
+  #gem 'execjs'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
+  gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
 end
