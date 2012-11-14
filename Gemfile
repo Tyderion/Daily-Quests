@@ -34,12 +34,15 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 group :test do
+  gem 'shoulda'
   gem 'database_cleaner'
   gem 'capybara'
-  gem 'factory_girl_rails'
   gem 'email_spec'
+  gem 'guard-rspec'
+  gem 'launchy'
 end
 
 
