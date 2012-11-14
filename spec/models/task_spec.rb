@@ -15,12 +15,7 @@
 require 'spec_helper'
 
 describe Task do
-  before :all do
-    t = Task.new
-    t.type = "Task"
-    t.type = "Quest"
-    t.type = "Questsequence"
-  end
+
   it "has a valid factory" do
     FactoryGirl.create(:task).should be_valid
   end
@@ -54,10 +49,6 @@ describe Task do
     it "responds to public?" do
       expect { @task.public? }.to_not raise_error
     end
-  end
-
-  it "is invalid without a type" do
-    FactoryGirl.build(:task, type: nil).should_not be_valid
   end
 
   it "has many Subasks " do
