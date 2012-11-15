@@ -1,4 +1,4 @@
-class SubtaskValidator
+class SubtaskValidatorWithCache
   def initialize(task)
     @task = task
     @valid= SubtaskCache.new

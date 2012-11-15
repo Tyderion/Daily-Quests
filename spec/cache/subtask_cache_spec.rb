@@ -4,7 +4,6 @@ describe SubtaskCache do
   before :each do
     @cache = SubtaskCache.new
     @task = FactoryGirl.build(:task)
-    #debugger
     @task.save
     @cache.store(@task)
   end
