@@ -2,6 +2,11 @@ require 'factory_girl'
 
 FactoryGirl.define do
   factory :task do
+    s = Task.new
+    s.type = "Task"
+    s.type = "Quest"
+    s.type = "Questsequence"
+    s = nil
     sequence(:description)  { |n| "Description #{n}"+Faker::Lorem.paragraph }
     sequence(:title) { |n| "Title #{2}" }
     private true

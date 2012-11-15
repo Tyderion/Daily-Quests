@@ -16,7 +16,6 @@ class SubtaskValidator
   def subtasks_valid?(subtasks)
     subtasks.each do |task|
       if subtask_valid?(task)
-
       return false
     end
     true
