@@ -59,17 +59,18 @@ ul > li.draggable{
 }
 #subtask_list {
   position: absolute;
-  top: 5px;
+  top: 0;
   left: 38%;
   width: 35%;
-  height: 93%;
+  height: 100%;
   ol {
-    list-style: decimal;
+    list-style: decimal inside none;
     height: 85%;
     width: 100%;
     overflow: auto;
     li > label {
     color: black;
+    display: inline;
     }
   }
 }
@@ -81,6 +82,8 @@ ul > li.draggable{
 .task-form {
   position: relative;
   .control-group  {
+    margin-bottom: 20px;
+    clear: both;
     width: 38%;
     input {
       width: 85%;

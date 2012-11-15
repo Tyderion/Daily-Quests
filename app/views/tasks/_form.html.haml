@@ -12,9 +12,9 @@
   .subtasks#subtask_list.control-group
     %label Subtasks
     %ol.droppable.ui-widget-content.sortable#subtask_sortable
-      .control
-        - @task.subtasks.each do |task|
-          = render partial: 'subtask_input', locals: { task: task }
+      - @task.subtasks.each do |task|
+        = render partial: 'subtask_input', locals: { task: task }
+        -#Todo: list-style outside is not displayed :S
 
 
   -# f.actions do

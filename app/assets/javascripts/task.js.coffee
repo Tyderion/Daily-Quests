@@ -87,10 +87,9 @@ $ ->
   , "#delete_icon"
 
   add_error= (error) ->
-    li_element = $("#task_#{error["title"]}_input")
-    $('label', li_element).css "color", "red"
-    $(li_element).append "<div class='inline_error'> #{error["error"]} </div>"
-
+    element = $("#task_#{error["title"]}").parent()
+    $(element).append "<div class='inline_error'> #{error["error"]} </div>"
+    $('.inline_error').css "color", "red"
 
 
   $('html').on

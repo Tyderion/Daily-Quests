@@ -21,7 +21,7 @@ $('.droppable').droppable
   drop: (event, ui) ->
     window.subtask_dropped  ui.draggable
     window.adjust_inputs()
-$('select').chosen()
-$('#task_type_chzn > a > span').html "<%= @task.type %>"
-$('#task_type_chzn > a > span').css "color", "black"
-$(e).addClass('result-selected') for e in $('#task_type_chzn > div > ul.chzn-results > li') when e.html() == "<%= @task.type %>"
+# $('select').chosen()
+# $('#task_type_chzn > a > span').html "<%= @task.type %>"
+# $('#task_type_chzn > a > span').css "color", "black"
+# $(e).addClass('result-selected') for e in $('#task_type_chzn > div > ul.chzn-results > li') when e.html() == "<%= @task.type %>"

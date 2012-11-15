@@ -22,7 +22,7 @@ class Subtask < ActiveRecord::Base
 
 
   delegate :id,  :title, :description, :subtasks, :title=, :description=, :add_subtask, :add_subtasks,
-           :subtask_valid?, :public?, :private?, :type, :type=,
+           :subtask_valid?, :public?, :private?, :type, :type=, :visibility,
            to: :subtask
 
 
