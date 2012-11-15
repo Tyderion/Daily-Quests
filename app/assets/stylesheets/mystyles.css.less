@@ -60,13 +60,14 @@ ul > li.draggable{
 #subtask_list {
   position: absolute;
   top: 5px;
-  right: 5px;
-  width: 45%;
+  left: 38%;
+  width: 35%;
   height: 93%;
   ol {
     list-style: decimal;
     height: 85%;
     width: 100%;
+    overflow: auto;
     li > label {
     color: black;
     }
@@ -77,7 +78,19 @@ ul > li.draggable{
   float: none;
 }
 
+.task-form {
+  position: relative;
+  .control-group  {
+    width: 38%;
+    input {
+      width: 85%;
+    }
+    textarea {
+      width: 85%;
+    }
 
+  }
+}
 
 
 
@@ -94,40 +107,40 @@ ul > li.draggable{
 .span6 {
   //border: 1px solid green;
 }
-.formtastic fieldset.inputs > ol > li.input label.label abbr {
-  right: 12px;
-  top: 3px;
-}
-.formtastic fieldset.inputs > ol > li.input label.label {
-  float: left;
-  text-align: left;
-  width: auto;
+// .formtastic fieldset.inputs > ol > li.input label.label abbr {
+//   right: 12px;
+//   top: 3px;
+// }
+// .formtastic fieldset.inputs > ol > li.input label.label {
+//   float: left;
+//   text-align: left;
+//   width: auto;
 
-}
+// }
 
-.formtastic fieldset.inputs,.formtastic fieldset.actions{
-  margin: 5px;
-}
-.formtastic fieldset.inputs ol > li.input.boolean.input input[type="checkbox"] {
-  margin-left: 0px;
-}
+// .formtastic fieldset.inputs,.formtastic fieldset.actions{
+//   margin: 5px;
+// }
+// .formtastic fieldset.inputs ol > li.input.boolean.input input[type="checkbox"] {
+//   margin-left: 0px;
+// }
 
-.formtastic fieldset.inputs ol > li.input.stringish input[type="text"] {
-  float: left;
-  clear: both;
-}
+// .formtastic fieldset.inputs ol > li.input.stringish input[type="text"] {
+//   float: left;
+//   clear: both;
+// }
 
-.formtastic fieldset.actions ol {
-  margin-left: 5px;
-}
+// .formtastic fieldset.actions ol {
+//   margin-left: 5px;
+// }
 
-.formtastic fieldset.inputs ol > li.input.text textarea,
-{
-  height: 100px;
-  max-width: 350px;
-  float: left;
-  clear: both;
-}
+// .formtastic fieldset.inputs ol > li.input.text textarea,
+// {
+//   height: 100px;
+//   max-width: 350px;
+//   float: left;
+//   clear: both;
+// }
 
 
 // //borders

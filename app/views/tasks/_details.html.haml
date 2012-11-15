@@ -12,7 +12,7 @@
         %th Type
       %tbody
         %td= task.description.empty? ? t('task.empty.description') : task.description
-        %td= task.private? ? t('task.private') : t('task.public')
+        %td= task.visibility
         %td= task.type=="Select an Option" ? t('task.empty.type') : task.type
     -task.subtasks.order("position_in_task ASC").each do |i|
       =render partial: 'details', locals: {task: i, subs: subs} if subs

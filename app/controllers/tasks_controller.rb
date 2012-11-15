@@ -42,13 +42,13 @@ class TasksController < ApplicationController
   end
 
   def create
-    debugger
+    #debugger
     valid = true
     subtasks = params[:task][:subtasks]
     params[:task].delete :subtasks
     type_error = false
 
-    if params[:task][:type].empty?
+    if params[:task][:type].blank?
       params[:task][:type] = "Task"
       type_error = true
     else
@@ -65,7 +65,8 @@ class TasksController < ApplicationController
           @task.add_subtask(Task.find(e))
         end
       end
-      redirect_to @task, :notice => "Successfully created task."
+      #Todo: Display Notice and Really redirect xD
+      redirect_to tasks_path, :notice => "Successfully created task."
     else
       if type_error
         @task.errors.add :type, "Can't be blank."
@@ -108,13 +109,7 @@ class TasksController < ApplicationController
       @subtasks =  Task.find(params[:task]['subtasks'])
       unless @task_detail.id.nil?
         @invalid_subtasks = @task_detail.subtasks_valid(@subtasks)
-        #Somehow this doesn not remove them but when doing manually when debugging it works
         @invalid_subtasks.each { |i| @subtasks.delete(Task.find(i)) }
-       #  @subtasks.each do |s|
-       #    if @invalid_subtasks.include? s.id
-       #      @subtasks.delete(s)
-       #    end
-       # end
       end
     end
 

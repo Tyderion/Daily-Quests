@@ -23,8 +23,9 @@ gem 'gon'
 
 #Lookup Tables (e.g. Type)
 gem 'rails_lookup'
-gem 'formtastic'
-gem 'formtastic-plus-bootstrap'
+# gem 'formtastic'
+# gem 'formtastic-plus-bootstrap'
+gem 'simple_form', "~> 2.0.0.rc"
 
 group :development do
   gem 'annotate'
