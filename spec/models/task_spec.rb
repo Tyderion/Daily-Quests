@@ -16,7 +16,7 @@ require 'spec_helper'
 
 describe Task do
 
-  it "has a valid factory" do
+  it "has a valid factory (factory doesn't always work in this test Oo)" do
     FactoryGirl.create(:task).should be_valid
   end
 
@@ -36,6 +36,42 @@ describe Task do
 
   it "is invalid without a creator" do
     FactoryGirl.build(:task, creator: nil).should_not be_valid
+  end
+
+
+  describe "Subtasks" do
+    before :each do
+      @task = FactoryGirl.create(:task)
+    end
+    it "is possible to add a task to another task as a subtask" do
+      task2 = FactoryGirl.create(:task)
+      @task.add_subtask(task2)
+      @task.subtasks.length.should == 1
+    end
+    it "is not possible to add a task to itself" do
+      @task.subtask_valid?(@task).should == false
+    end
+    it "is not possible to add a parent of itself to itself" do
+      task2 = FactoryGirl.create(:task)
+      @task.add_subtask(task2)
+      task2.subtask_valid?(@task).should == false
+    end
+    it "is not possible to add any ancestor to a task" do
+      tasks = []
+      (1..10).each {tasks << FactoryGirl.create(:task)}
+      task = @task
+      tasks.each do |t|
+        p "#{t} is #{task.valid?}"
+        t.save
+        task.add_subtask(t)
+        task = t
+      end
+      p @task.subtasks
+      tasks.each do |t|
+        p t.subtasks
+      end
+      tasks[-1].subtask_valid?(@task).should == false
+    end
   end
 
   describe "Visibility " do
@@ -60,7 +96,7 @@ describe Task do
   end
 
   it "has many Questsequences" do
-     should have_many(:questsequence)
+     should have_many(:questsequences)
   end
 
 
