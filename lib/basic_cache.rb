@@ -1,5 +1,4 @@
 class BasicCache
-
   def initialize
     @cache = {}
   end
@@ -18,5 +17,9 @@ class BasicCache
 
   def include?(key)
     @cache.include? key
+  end
+
+  def each(&block)
+    @cache.each(&block)
   end
 end
