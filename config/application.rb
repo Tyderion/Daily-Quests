@@ -37,6 +37,8 @@ module DailyQuests
 
     #Load validators from lib
     config.autoload_paths += %W["#{config.root}/lib/validators/"]
+    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
     # Enable PJAX
     #config.middleware.use Rack::Pjax
     # Settings in config/environments/* take precedence over those specified here.
