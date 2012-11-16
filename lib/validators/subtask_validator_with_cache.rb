@@ -1,36 +1,34 @@
 class SubtaskValidatorWithCache
   def initialize(task)
     @task = task
-    @valid= SubtaskCache.new
-    @invalid = SubtaskCache.new
+    @valid= GlobalSubtaskCache.new(key: task.id*2)
+    @invalid = GlobalSubtaskCache.new(key: task.id*2-1)
   end
 
   def valid?(task)
     if @valid.include?(task)
       true
-    elsif @invalid.include(task)
+    elsif @invalid.include?(task)
       false
     elsif task.id == @task.id || !type_valid?(task)
       @invalid.store(task)
       false
     else
-      @valid.store(task)
-      true
+      if subtasks_valid?(task.subtasks)
+        @valid.store(task)
+        true
+      else
+        @invalid.store(task)
+        false
+      end
     end
-
-    # if !@valid.include?(task) && ( @invalid.include(task) || task.id == @task.id || !type_valid?(task) )
-    #   @invalid.store(task)
-    #   return false
-    # else
-    #   @valid.store(task) unless @valid.include?(task)
-    #   return subtasks_valid?(task.subtasks)
-    # end
   end
 
   def subtasks_valid?(subtasks)
     subtasks.each do |task|
-      if subtask_valid?(task)
-      return false
+      unless valid?(task)
+        return false
+      end
     end
     true
   end
