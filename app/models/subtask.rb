@@ -32,6 +32,7 @@ class Subtask < ActiveRecord::Base
     # end
   end
 
+
   def destroy
     unless new_record?
       connection.delete(

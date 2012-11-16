@@ -6,6 +6,8 @@ class SubtaskValidatorWithCache
   end
 
   def valid?(task)
+    _task = task
+    task = task.subtask if task.class == Subtask
     if @valid.include?(task)
       true
     elsif @invalid.include?(task)
@@ -26,9 +28,7 @@ class SubtaskValidatorWithCache
 
   def subtasks_valid?(subtasks)
     subtasks.each do |task|
-      unless valid?(task)
-        return false
-      end
+      return false unless valid?(task)
     end
     true
   end
@@ -41,7 +41,7 @@ class SubtaskValidatorWithCache
     elsif @task.type == "Quest"#TaskType.name_for(2)
       task.type == "Task"#TaskType.name_for(1)
     elsif @task.type == "Questsequence"#TaskType.name_for(3)
-      task.type = "Quest"#TaskType.name_for(2)
+      task.type == "Quest"#TaskType.name_for(2)
     end
   end
 end

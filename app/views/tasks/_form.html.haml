@@ -5,7 +5,7 @@
   = f.input :description, input_html: {cols: 30, rows: 10 }#, input_html: {class: "task_form"}
   = f.input :private#, input_html: {class: "task_form"}
   -# tasktypes = TaskType.first
-  = f.input :type, as: :radio, collection: TaskType.all, label_html: {id: "task_type"} #- tasktypes[0]
+  = f.input :type, as: :radio_buttons, collection: TaskType.all, label_html: {id: "task_type"} #- tasktypes[0]
   - if @task.id
     =f.input :id, as: :hidden
   %input.hidden{name: "task[creator]", value: 1}

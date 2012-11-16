@@ -26,6 +26,7 @@ class Task < ActiveRecord::Base
   validates :private, :inclusion => {:in => [true, false]}
 
 
+
   has_many :subtasks
 
     # Make it not generate an exception when trying to assign an empty type
@@ -55,45 +56,20 @@ class Task < ActiveRecord::Base
   end
 
   def add_subtask(task)
-
-    self.subtasks.push Subtask.new(task: self, subtask: task) if subtask_valid?(task)
-  end
-
-  def subtask_valid?(other)
-    if other.id == self.id || !type_valid?(other)
-      return false
-    else
-      return subtasks_valid?(other.subtasks)
+    if validator.valid?(task)
+      self.subtasks.push Subtask.new(task: self, subtask: task)
     end
+    validator.valid?(task)
   end
+
+  def validator
+    @validator ||=  SubtaskValidatorWithCache.new(self)
+  end
+
 
   def add_subtasks(tasks)
     tasks.each do |element|
       add_subtask(element)
-    end
-  end
-
-  def subtasks_valid(subtasks)
-    errors = []
-    subtasks.each { |sub| errors << sub.id unless subtask_valid?(sub) }
-    return errors
-  end
-
-  private
-  def subtasks_valid?(subtasks)
-    subtasks.each do |task|
-      return false unless subtask_valid?(task)
-    end
-    true
-  end
-
-  def type_valid?(other)
-    if self.type == TaskType.name_for(1)
-      other.type == TaskType.name_for(1)
-    elsif self.type == TaskType.name_for(2)
-      other.type == TaskType.name_for(1)
-    elsif self.type == TaskType.name_for(3)
-      other.type = TaskType.name_for(2)
     end
   end
 

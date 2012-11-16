@@ -8,4 +8,8 @@ class GlobalSubtaskCache < GlobalCache
     end
   end
 
+  def include?(task)
+    @cache.include? task.id
+  end
+
 end
