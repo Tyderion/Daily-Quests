@@ -1,3 +1,5 @@
+# Representation of a Task
+#
 # == Schema Information
 #
 # Table name: tasks
@@ -11,7 +13,6 @@
 #  creator     :integer
 #  type        :integer
 #
-
 class Task < ActiveRecord::Base
   attr_accessible :title, :description, :private, :type, :creator
   include RailsLookup
@@ -29,6 +30,16 @@ class Task < ActiveRecord::Base
 
   has_many :subtasks
 
+
+  after_initialize :create_validator
+
+
+  private
+    def create_validator
+      @validator ||=  SubtaskValidatorWithCache.new(self) unless self.id.nil?
+    end
+  public
+
     # Make it not generate an exception when trying to assign an empty type
     def type=(t)
       if t.blank?
@@ -39,39 +50,84 @@ class Task < ActiveRecord::Base
     end
 
 
-  def visibility
-    private? ? I18n.t('task.private') : I18n.t('task.public')
-  end
-
-  def not_visibility
-    private? ?  I18n.t('task.public') : I18n.t('task.private')
-  end
-
-
-  def public?
-    not private?
-  end
-  def private?
-    private
-  end
-
-  def add_subtask(task)
-    if validator.valid?(task)
-      self.subtasks.push Subtask.new(task: self, subtask: task)
+    # Returns Visibility as string
+    #
+    # * *Returns* :
+    #   - String "public" or "private"
+    #
+    def visibility
+      private? ? I18n.t('task.private') : I18n.t('task.public')
     end
-    validator.valid?(task)
-  end
 
-  def validator
-    @validator ||=  SubtaskValidatorWithCache.new(self)
-  end
-
-
-  def add_subtasks(tasks)
-    tasks.each do |element|
-      add_subtask(element)
+    # Returns Opposite Visibility as string
+    #
+    # * *Returns* :
+    #   - String "public" or "private"
+    #
+    def not_visibility
+      private? ?  I18n.t('task.public') : I18n.t('task.private')
     end
-  end
+
+    # Returns true if task is public
+    #
+    # * *Returns* :
+    #   - Boolean
+    #
+    def public?
+      not private?
+    end
+    # Returns true if task is private
+    #
+    # * *Returns* :
+    #   - Boolean
+    #
+    def private?
+      private
+    end
+
+
+    # Tests if the other Task is a valid subtask
+    #
+    # * *Args*    :
+    #   - +other+ -> the  Task to be tested
+    # * *Returns* :
+    #   - True if other is a valid task this task
+    #
+    def validate_subtask?(other)
+      create_validator
+      @validator.valid?(other)
+    end
+
+    # Adds a task as a subtask if it is valid
+    #
+    # * *Args*    :
+    #   - +task+ -> the Task to be added
+    # * *Returns* :
+    #   - True if other has been added
+    #
+    def add_subtask(task)
+      if validate_subtask?(task)
+        self.subtasks.push Subtask.new(task: self, subtask: task)
+        return true
+      end
+      false
+    end
+
+
+    # Adds all tasks as subtasks if each is valid
+    #
+    # * *Args*    :
+    #   - +tasks+ -> An array of Tasks to be added
+    # * *Returns* :
+    #   - nothing
+    #
+    def add_subtasks(tasks)
+      tasks.each do |element|
+        add_subtask(element)
+      end
+    end
+
+
 
 
 end
