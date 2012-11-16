@@ -50,6 +50,7 @@ class Task < ActiveRecord::Base
     end
 
 
+
     # Returns Visibility as string
     #
     # * *Returns* :
@@ -103,15 +104,18 @@ class Task < ActiveRecord::Base
     # * *Args*    :
     #   - +task+ -> the Task to be added
     # * *Returns* :
-    #   - True if other has been added
+    #   - nil if successful, an errormessage in a hash otherwise
     #
     def add_subtask(task)
       if validate_subtask?(task)
         self.subtasks.push Subtask.new(task: self, subtask: task)
-        return true
+        return response(task, true)
       end
-      false
+      response(task, false)
     end
+
+
+
 
 
     # Adds all tasks as subtasks if each is valid
@@ -119,12 +123,28 @@ class Task < ActiveRecord::Base
     # * *Args*    :
     #   - +tasks+ -> An array of Tasks to be added
     # * *Returns* :
-    #   - nothing
+    #   - nil if all tasks were added, an array with an errormessage for each invalid subtask otherwise
     #
     def add_subtasks(tasks)
+      array = {}
       tasks.each do |element|
-        add_subtask(element)
+        error = add_subtask(element)
+        array[task.id] = error unless error.nil?
       end
+      array.length == 0 ? nil : array
+    end
+
+
+
+    # Generates a response for the view depending on the validity of the task
+    # * *Args*    :
+    #   - +task+ -> The task which is valid or invalid as a subtask
+    #   - +valid+ -> The validity of the task
+    # * *Returns* :
+    #   - A string with the error or nil
+    #
+    def self.response(task, valid= true)
+      t('task.invalid_subtask') unless valid
     end
 
 

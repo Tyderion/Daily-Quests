@@ -30,6 +30,7 @@ class SubtaskValidatorWithCache
         @invalid.include?(task) || @invalid.store(task)
         false
       else
+        # WHen subtasks change, just validate the difference
         @valid.include?(task) || @valid.store(task)
         true
       end
