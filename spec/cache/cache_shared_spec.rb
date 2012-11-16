@@ -1,60 +1,88 @@
 require 'spec_helper'
 
-shared_examples_for "cache" do |cache, value_method|
+shared_examples_for "cache" do |key_value_method|
   before :each do
-    @cache = cache.new
-    @value = value_method
-    @key = "key"
-    @cache.store(@key, @value)
+
+    @key, @value = key_value_method.nil? ?  default_key_value : key_value_method.call
+    store
+  end
+
+  def default_key_value(x = "")
+    ["key#{x}", "value#{x}"]
+  end
+
+  def store( key= @key, value = @value)
+    @arity ||= subject.method(:store).arity
+    case @arity
+    when 1
+      subject.store(value)
+    else
+      subject.store(key, value)
+    end
   end
 
 
+  describe "equality" do
+    it "is equal if the key/value pairs are equal" do
+      @cache = subject.dup
+      subject.should == @cache
+    end
+  end
 
   describe "store" do
 
     it "responds to store" do
-    expect { @cache.store(@key, @value) }.to_not raise_error
+    expect { store }.to_not raise_error
     end
     it "returns the thing when storing it" do
-      @cache.store(@key, @value).should == @value
+      store.should == @value
     end
   end
 
-  describe "cache" do
-    it "returns a hash" do
-      @cache.cache.class.should == Hash
+  describe "to_hash" do
+    it "returns a Hash containing the key-value pairs" do
+      subject.to_hash.class.should == Hash
     end
     it "contains the values" do
-      @cache.cache[@key] = @value
+      subject.to_hash[@key] = @value
     end
   end
+
 
   describe "get" do
     it "responds to get" do
-    expect { @cache.get(@key) }.to_not raise_error
+    expect { subject.get(@key) }.to_not raise_error
     end
     it "returns things" do
-      @cache.get(@key).should == @value
+      subject.get(@key).should == @value
     end
     it "returns nil if key not present" do
-      @cache.get("not_present").should == nil
+      subject.get("not_present").should == nil
     end
   end
   describe "key" do
-    it "returns keys" do
-      @cache.key(@value).should == @key
+    it "returns the key to the corresponding value" do
+      subject.key(@value).should == @key
     end
      it "returns nil if value not present" do
-      @cache.key("not_present").should == nil
+      subject.key("not_present").should == nil
+    end
+  end
+  describe "keys" do
+    it "returns an array" do
+      subject.keys.class.should == Array
+    end
+    it "contains the keys" do
+      subject.keys[0] = @key
     end
   end
 
   describe "include?" do
     it "returns true if key is in cache" do
-      @cache.include?(@key).should == true
+      subject.include?(@key).should == true
     end
     it "returns false if key is in not cache" do
-      @cache.include?("key2").should == false
+      subject.include?("key2").should == false
     end
   end
 

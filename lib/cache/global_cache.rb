@@ -11,11 +11,12 @@ class GlobalCache < BasicCache
     @@global_cache[@key] = @cache
   end
 
-
   # Removes the saved values from the global hash, can still store/retrieve values.
   #
   def localize
     @@global_cache.delete @key
   end
+
+
 
 end
