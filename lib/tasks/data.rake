@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '../../config/environment')
 require 'database_cleaner'
 
+
 namespace :dailyquest do
   namespace :data do
 

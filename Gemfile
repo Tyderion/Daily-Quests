@@ -28,6 +28,7 @@ gem 'rails_lookup'
 gem 'simple_form', "~> 2.0.0.rc"
 
 group :development do
+  gem "rails_best_practices"
   gem 'annotate'
   gem 'nifty-generators'
   gem 'haml-rails'
