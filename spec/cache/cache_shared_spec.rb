@@ -1,27 +1,24 @@
 require 'spec_helper'
 
+def default_key_value(x = "")
+  ["key#{x}", "value#{x}"]
+end
+
+def store( key= @key, value = @value, cache = subject )
+  arity = cache.method(:store).arity
+  case arity
+  when 1
+    cache.store(value)
+  else
+    cache.store(key, value)
+  end
+end
+
 shared_examples_for "cache" do |key_value_method|
   before :each do
-
     @key, @value = key_value_method.nil? ?  default_key_value : key_value_method.call
     store
   end
-
-  def default_key_value(x = "")
-    ["key#{x}", "value#{x}"]
-  end
-
-  def store( key= @key, value = @value)
-    @arity ||= subject.method(:store).arity
-    case @arity
-    when 1
-      subject.store(value)
-    else
-      subject.store(key, value)
-    end
-  end
-
-
   describe "equality" do
     it "is equal if the key/value pairs are equal" do
       @cache = subject.dup
@@ -85,6 +82,18 @@ shared_examples_for "cache" do |key_value_method|
       subject.include?("key2").should == false
     end
   end
+end
 
-
+shared_examples_for "global-cache" do |key_value_method|
+  it_should_behave_like "cache", key_value_method
+  before :each do
+    @key, @value = key_value_method.nil? ?  default_key_value : key_value_method.call
+    @instance_key = 1
+  end
+  it "returns the same saved values if creating with a key" do
+    g1 = subject.class.new(key: @instance_key)
+    store(@key, @value, g1)
+    g2 = subject.class.new(key: @instance_key)
+    g2.should == g1
+  end
 end
