@@ -14,7 +14,10 @@ class SubtaskValidatorWithCache
     @invalid = GlobalSubtaskCache.new(key: task.id*2-1)
   end
 
+
   public
+
+
     # Tests if a given task is a valid subtask to the Task this Validator corresponds to
     #
     # * *Args*    :
@@ -32,12 +35,21 @@ class SubtaskValidatorWithCache
       end
     end
 
+    # Returns an array of all invalid keys
+    # * *Returns* :
+    #   - Array of Task IDs
+    #
+    def invalid
+      @invalid.keys
+    end
+
   private
     def subtasks_valid?(subtasks)
+      valid = true
       subtasks.each do |task|
-        return false unless valid?(task.subtask)
+        valid = false unless valid?(task.subtask)
       end
-      true
+      valid
     end
 
 

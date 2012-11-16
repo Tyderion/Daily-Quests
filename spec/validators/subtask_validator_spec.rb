@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe SubtaskValidatorWithCache do
-  #Todo: Specs for the validator
   before :each do
     @task = FactoryGirl.create(:task)
     @task2 = FactoryGirl.create(:task)
@@ -55,7 +54,6 @@ describe SubtaskValidatorWithCache do
       end
       context "Task" do
         it "returns true if other is type task" do
-          #debugger
           @task_validator.valid?(@task2).should == true
         end
         it "returns false if other is type quest" do

@@ -1,7 +1,10 @@
 class TasksController < ApplicationController
-
+  #Todo: Reduce Complexity by moving a out of the controller
+  #Todo: Write Tests
+  #Todo: Write Comments
 
   def index
+    # Looks ok
     @tasks = Task.where(private: false)
     respond_to do |format|
       format.html
@@ -25,7 +28,7 @@ class TasksController < ApplicationController
   end
 
   def details
-    #debugger
+    # This one looks ok
     @task_detail = Task.find(params[:id])
     respond_to do |format|
       format.js
@@ -33,6 +36,7 @@ class TasksController < ApplicationController
   end
 
   def new
+    # This one looks ok
     @task = Task.new
     @tasks = Task.where(private: false)#.paginate(:page => params[:page], per_page: 5)
     respond_to do |format|
@@ -56,7 +60,6 @@ class TasksController < ApplicationController
     end
     @task = Task.new(params[:task])
     @tasks = Task.where(private: false).paginate(:page => params[:page], per_page: 5)
-
 
     if @task.valid? && !type_error
       @task.save
@@ -85,6 +88,7 @@ class TasksController < ApplicationController
   end
 
   def edit
+    # Looks ok
     @task = Task.find(params[:id])
     @tasks = Task.where(private: false)
   end
@@ -108,6 +112,7 @@ class TasksController < ApplicationController
       #Grab all subtasks
       @subtasks =  Task.find(params[:task]['subtasks'])
       unless @task_detail.id.nil?
+        #Note: to myself: What is this?
         @invalid_subtasks = @task_detail.subtasks_valid(@subtasks)
         @invalid_subtasks.each { |i| @subtasks.delete(Task.find(i)) }
       end
@@ -120,6 +125,7 @@ class TasksController < ApplicationController
   end
 
   def update
+    #Looks ok, but does it do what is should?
     @task = Task.find(params[:id])
     if @task.update_attributes(params[:task])
       redirect_to @task, :notice  => "Successfully updated task."
@@ -131,6 +137,7 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
+    #This needs to go into the model
     subtasks = Subtask.where("task_id = ? or subtask_id = ?", params[:id], params[:id])   #.select("id")
     subtasks.each { |s| s.destroy }
     #redirect_to tasks_url, :notice => "Successfully destroyed task."
