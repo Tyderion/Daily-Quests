@@ -61,6 +61,45 @@ class Task < ActiveRecord::Base
     end
 
 
+    # Creates a new task and sets the ID if the task is based on an existing one
+    def self.preview_task(*args)
+      params = args.extract_options!
+      #Create new task
+      task = Task.new(title: params[:task][:title],
+                description: params[:task][:description],
+                private: params[:task][:private].to_i == 0 ? false : true,
+                type: params[:task][:type]
+              )
+      # If it has an id, set it
+      task.id = params[:task][:id] unless params[:task][:id].nil?
+      task
+    end
+
+    # Creates lists of valid and invalid subtasks
+    #
+    # * *Args*    :
+    #   - +task+ -> the  Task which is being previewed
+    #   - +args+ -> a hash containing an array of task ids in [:task]['subtasks']
+    # * *Returns* :
+    #   - An array containing the task, an array of valid tasks, an array ofinvalid tasks
+    #
+    def self.preview_lists(task,*args )
+      params = args.extract_options!
+      subtasks = []
+      invalid_subtasks = []
+      unless params[:task]['subtasks'].nil?
+        #Grab all subtasks
+        subtasks =  Task.find(params[:task]['subtasks'])
+        unless task.id.nil?
+          # Remove invalid subtasks so they do not get rendered
+          invalid_subtasks = task.validate_subtasks(subtasks)
+          invalid_subtasks.each { |i| subtasks.delete(Task.find(i)) }
+        end
+      end
+      [task, subtasks, invalid_subtasks]
+    end
+
+
 
     # Returns Visibility as string
     #
@@ -108,6 +147,22 @@ class Task < ActiveRecord::Base
     def validate_subtask?(other)
       create_validator
       @validator.valid?(other)
+    end
+
+    # Task an array of Task-IDs and returns an array with invalid tasks-IDs
+    #
+    # * *Args*    :
+    #   - +subtasks+ -> Array of Task IDs
+    # * *Returns* :
+    #   - an array containing all invalid subtasks
+    #
+    def validate_subtasks(subtasks)
+      array = []
+      create_validator
+      subtasks.each do |id|
+        array << id unless @validator.valid? Task.find(id)
+      end
+      array
     end
 
     # Adds a task as a subtask if it is valid

@@ -11,27 +11,28 @@ $ ->
       $('#subtask_sortable > li').each (i, e) ->
         subtasks.push $('input', e).val()
 
-      if $('#task_id').val() > 0
-        $.ajax
-          url: '/task/preview'
-          type: "get"
-          dataType: 'script'
-          data:
-            task:
-              id: $('#task_id').val()
-              subtasks: subtasks
-      else
-        $.ajax
-          url: '/task/preview'
-          type: "get"
-          dataType: 'script'
-          data:
-            task:
-              title: $('#task_title').val()
-              description: $('#task_description').val()
-              private: $('#task_private_input > input').val()
-              type: $('#task_type_chzn > a > span').html()
-              subtasks: subtasks
+      # if $('#task_id').val() > 0
+      #   $.ajax
+      #     url: '/task/preview'
+      #     type: "get"
+      #     dataType: 'script'
+      #     data:
+      #       task:
+      #         id: $('#task_id').val()
+      #         subtasks: subtasks
+      # else
+      $.ajax
+        url: '/task/preview'
+        type: "get"
+        dataType: 'script'
+        data:
+          task:
+            id: $('#task_id').val()
+            title: $('#task_title').val()
+            description: $('#task_description').val()
+            private: $('#task_private_input > input').val()
+            type: $('#task_type_chzn > a > span').html()
+            subtasks: subtasks
 
 
   , "#task_preview_action"
