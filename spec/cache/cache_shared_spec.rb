@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 def default_key_value(x = "")
-  ["key#{x}", "value#{x}"]
+  ["key#{x}", "value#{x}"]*2
 end
 
 def store( key= @key, value = @value, cache = subject )
@@ -16,7 +16,7 @@ end
 
 shared_examples_for "cache" do |key_value_method|
   before :each do
-    @key, @value = key_value_method.nil? ?  default_key_value : key_value_method.call
+    @key, @value, @retrieve_key, @stored_value = key_value_method.nil? ?  default_key_value : key_value_method.call
     store
   end
   describe "equality" do
@@ -32,7 +32,7 @@ shared_examples_for "cache" do |key_value_method|
     expect { store }.to_not raise_error
     end
     it "returns the thing when storing it" do
-      store.should == @value
+      store.should == @stored_value
     end
   end
 
@@ -51,7 +51,7 @@ shared_examples_for "cache" do |key_value_method|
     expect { subject.get(@key) }.to_not raise_error
     end
     it "returns things" do
-      subject.get(@key).should == @value
+      subject.get(@key).should == @stored_value
     end
     it "returns nil if key not present" do
       subject.get("not_present").should == nil
@@ -59,7 +59,7 @@ shared_examples_for "cache" do |key_value_method|
   end
   describe "key" do
     it "returns the key to the corresponding value" do
-      subject.key(@value).should == @key
+      subject.key(@stored_value).should == @key
     end
      it "returns nil if value not present" do
       subject.key("not_present").should == nil
@@ -76,7 +76,7 @@ shared_examples_for "cache" do |key_value_method|
 
   describe "include?" do
     it "returns true if key is in cache" do
-      subject.include?(@key).should == true
+      subject.include?(@retrieve_key).should == true
     end
     it "returns false if key is in not cache" do
       subject.include?("key2").should == false
@@ -84,10 +84,11 @@ shared_examples_for "cache" do |key_value_method|
   end
 end
 
-shared_examples_for "global-cache" do |key_value_method|
-  it_should_behave_like "cache", key_value_method
+shared_examples_for "global-cache" do |key_value_retrieve_method|
+  it_should_behave_like "cache", key_value_retrieve_method
   before :each do
-    @key, @value = key_value_method.nil? ?  default_key_value : key_value_method.call
+    @key, @value = key_value_retrieve_method.nil? ?  default_key_value : key_value_retrieve_method.call
+    #@retrieve_key, @stored_value = retrieve_method.nil? ?  retrieve_method : retrieve_method.call
     @instance_key = 1
   end
   it "returns the same saved values if creating with a key" do

@@ -13,6 +13,7 @@ class TasksController < ApplicationController
   end
 
   def search_subtasks_list
+    # This one looks ok now
     @tasks = Task.search_and_sort(params[:search])
     respond_to do |format|
       format.js

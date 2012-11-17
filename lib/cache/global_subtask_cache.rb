@@ -19,7 +19,11 @@ class GlobalSubtaskCache < GlobalCache
   end
 
   def include?(task)
-    @cache[task.id][1] == task.subtasks.map { |e| e.id } if @cache.include? task.id
+    if task.respond_to? 'id'
+      @cache[task.id][1] == task.subtasks.map { |e| e.id } if @cache.include? task.id
+    else
+      false
+    end
   end
 
 end
