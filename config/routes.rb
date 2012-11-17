@@ -3,7 +3,7 @@ DailyQuests::Application.routes.draw do
     except: [:show]
 
   get "tasks/:id/details", to: "Tasks#details"
-  get "subtasks", to: "Tasks#list_subtasks"
+  get "search_subtasks_list", to: "Tasks#search_subtasks_list"
   get "task/preview", to: "Tasks#preview"
 
   # The priority is based upon order of creation:

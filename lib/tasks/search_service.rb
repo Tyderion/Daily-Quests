@@ -3,7 +3,7 @@ module SearchService
     options = {}
     options["title LIKE"] = "%#{term}%"
     options["private ="] = false
-    search(build_query(options))
+    search_by_query(build_query(options))
   end
 
 
@@ -21,9 +21,7 @@ module SearchService
     end
     {query: query, arguments: arguments}
   end
-
-
-  def search(*args)
+  def search_by_query(*args)
     options = args.extract_options!
     self.where(options[:query], *options[:arguments])
   end

@@ -12,16 +12,8 @@ class TasksController < ApplicationController
     end
   end
 
-  def list_subtasks
-    @tasks = Task.where("private = ? and title LIKE ?",false, "%#{params[:search]}%").order("title ASC")
-    unless params[:search].empty?
-      begins_with = /^#{params[:search]}.*$/i
-      word_begins_with = /^.* #{params[:search]}.*$/i
-      first = @tasks.find_all{|item| item.title =~ begins_with }
-      second = @tasks.find_all{|item| item.title =~ word_begins_with }
-      last = @tasks.to_a - first - second
-      @tasks = first + second + last
-    end
+  def search_subtasks_list
+    @tasks = Task.search_and_sort(params[:search])
     respond_to do |format|
       format.js
     end
@@ -38,7 +30,7 @@ class TasksController < ApplicationController
   def new
     # This one looks ok
     @task = Task.new
-    @tasks = Task.where(private: false)#.paginate(:page => params[:page], per_page: 5)
+    @tasks = Task.where(private: false)
     respond_to do |format|
       format.html
       format.js

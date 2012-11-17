@@ -2,7 +2,7 @@ $ ->
   $('#subtasks_list').height $(window).height()*2/3
   $("html").on
     input: ->
-      url = "/subtasks?search=#{@value}"
+      url = "/search_subtasks_list?search=#{@value}"
       $.getScript(url)
   ,"#search_tasks"
   $('html').on

@@ -33,6 +33,9 @@ class Task < ActiveRecord::Base
 
   after_initialize :create_validator
 
+  extend SearchService
+  extend SortService
+
 
   private
     def create_validator
@@ -48,6 +51,13 @@ class Task < ActiveRecord::Base
       end
       id = TaskType.id_for(t) || TaskType.gen_id_for(t)
       self.type_id = id
+    end
+
+    # Uses Search and Sort Services to search for a term and sort the result
+    # * *Returns* :
+    #   - Array of sorted tasks
+    def self.search_and_sort(term)
+      Task.sort_by_title( Task.search_by_title( term ), term )
     end
 
 
