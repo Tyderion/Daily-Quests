@@ -9,7 +9,7 @@ FactoryGirl.define do
     s = nil
     sequence(:description)  { |n| "Description #{n}"+Faker::Lorem.paragraph }
     sequence(:title) { |n| "Title #{2}" }
-    private true
+    private false
     type_id 1
     creator 1 # First User creates all
   end

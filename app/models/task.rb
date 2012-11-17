@@ -37,6 +37,7 @@ class Task < ActiveRecord::Base
   private
     def create_validator
       @validator ||=  SubtaskValidatorWithCache.new(self) unless self.id.nil?
+
     end
   public
 
