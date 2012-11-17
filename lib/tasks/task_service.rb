@@ -1,16 +1,13 @@
-class TaskService
+module TaskService
+  @@begins_with = Proc.new {|s| /^#{s}.*$/i }
+  @@word_begins_with = Proc.new {|s| /^.* #{s}.*$/i }
 
-
-  def initialize
-    @@begins_with = Proc.new {|s| /^#{s}.*$/i }
-    @@word_begins_with = Proc.new {|s| /^.* #{s}.*$/i }
-  end
 
 
   def search_by_title(term, *args)
     options = args.extract_options!
     priv = options[:private].nil? ? false : options[:private]
-    tasks = Task.where("private = ? and title LIKE ?",priv, "%#{term}%")
+    tasks = self.where("private = ? and title LIKE ?",priv, "%#{term}%")
     tasks
   end
 
