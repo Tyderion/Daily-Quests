@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  #Todo: Reduce Complexity by moving a out of the controller
+  #Todo: Refactor create, destroy
   #Todo: Write Tests
   #Todo: Write Comments
 
