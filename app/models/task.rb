@@ -15,6 +15,7 @@
 #
 class Task < ActiveRecord::Base
   #Todo: Fix Task.create
+  #Todo: Refactor update_attributes and make it work
   attr_accessible :title, :description, :private, :type, :creator
   include RailsLookup
   lookup :task_type, as: :type
@@ -83,7 +84,7 @@ class Task < ActiveRecord::Base
     end
 
     def update_attributes(*args)
-      #Todo: Rework this method
+      #Todo: Extract this method into a SubtaskManager or something like that
       params = args.extract_options!
       subtasks = nil
       params.delete :id unless params[:id].nil?
