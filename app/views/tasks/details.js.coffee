@@ -1,1 +1,1 @@
-$('#right_content').html "<%= escape_javascript render partial: 'details_container' %>"
+$('#right_content').html "<%= escape_javascript render partial: 'details_container', locals: { task: @task_detail, subs: @task_detail.subtasks}   %>"
