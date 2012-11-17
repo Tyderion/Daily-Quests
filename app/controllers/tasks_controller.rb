@@ -4,7 +4,6 @@ class TasksController < ApplicationController
   #Todo: Write Comments
 
   def index
-    # Looks ok
     @tasks = Task.where(private: false)
     respond_to do |format|
       format.html
@@ -13,7 +12,6 @@ class TasksController < ApplicationController
   end
 
   def search_subtasks_list
-    # This one looks ok now
     @tasks = Task.search_and_sort(params[:search])
     respond_to do |format|
       format.js
@@ -21,7 +19,6 @@ class TasksController < ApplicationController
   end
 
   def details
-    # This one looks ok
     @task_detail = Task.find(params[:id])
     respond_to do |format|
       format.js
@@ -29,7 +26,6 @@ class TasksController < ApplicationController
   end
 
   def new
-    # This one looks ok
     @task = Task.new
     @tasks = Task.where(private: false)
     respond_to do |format|
@@ -81,13 +77,13 @@ class TasksController < ApplicationController
   end
 
   def edit
-    # Looks ok
     @task = Task.find(params[:id])
     @tasks = Task.where(private: false)
   end
 
   def preview
-    @task_detail, @subtasks, @invalid_subtasks = Task.preview_lists(Task.preview_task(params), params)
+    @task_detail =  Task.preview_task(params)
+    @subtasks, @invalid_subtasks = @task_detail.preview_lists(params)
     respond_to do |format|
       format.js
     end

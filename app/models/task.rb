@@ -35,8 +35,9 @@ class Task < ActiveRecord::Base
 
   after_destroy :destroy_subtasks
 
-  extend SearchService #Todo: Test presence
-  extend SortService #Todo: Test presence
+  #Todo: Test presence
+  extend SearchService
+  extend SortService
 
 
   private
@@ -89,22 +90,32 @@ class Task < ActiveRecord::Base
     #   - +task+ -> the  Task which is being previewed
     #   - +args+ -> a hash containing an array of task ids in [:task]['subtasks']
     # * *Returns* :
-    #   - An array containing the task, an array of valid tasks, an array ofinvalid tasks
+    #   - An array containing an array of valid tasks and an array of invalid tasks
     #
-    def self.preview_lists(task,*args )
+    def preview_lists(*args )
       params = args.extract_options!
       subtasks = []
       invalid_subtasks = []
       unless params[:task]['subtasks'].nil?
+        subtask_ids = params[:task]['subtasks']
         #Grab all subtasks
-        subtasks =  Task.find(params[:task]['subtasks'])
-        unless task.id.nil?
+        subtasks_unnumbered = Task.find(subtask_ids.uniq)
+        unless self.id.nil?
           # Remove invalid subtasks so they do not get rendered
-          invalid_subtasks = task.validate_subtasks(subtasks)
-          invalid_subtasks.each { |i| subtasks.delete(Task.find(i)) }
+          invalid_subtasks = self.validate_subtasks(subtasks_unnumbered)
+          invalid_subtasks.each do |i|
+            subtasks.delete(Task.find(i))
+            subtasks_ids.delete(i)
+          end
+        end
+        #Create a hash from the valid tasks
+        unnumbered_hash = Hash[subtasks_unnumbered.map{|t| [t.id, t]}]
+        # Add the tasks in the correct sequence and number to the subtasks array
+        subtask_ids.each do |id|
+          subtasks << unnumbered_hash[id.to_i]
         end
       end
-      [task, subtasks, invalid_subtasks]
+      [subtasks, invalid_subtasks]
     end
 
 
