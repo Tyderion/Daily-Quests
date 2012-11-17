@@ -87,30 +87,7 @@ class TasksController < ApplicationController
   end
 
   def preview
-    if params[:task][:id].nil?
-      #If it is a new task, create it
-      @task_detail = Task.new(
-              title: params[:task][:title],
-              description: params[:task][:description],
-              private: params[:task][:private].to_i == 0 ? false : true,
-              type: params[:task][:type]
-            )
-    else
-      #Grab the existing one
-      @task_detail = Task.find(params[:task][:id])
-    end
-    @subtasks = []
-    @invalid_subtasks = []
-    unless params[:task]['subtasks'].nil?
-      #Grab all subtasks
-      @subtasks =  Task.find(params[:task]['subtasks'])
-      unless @task_detail.id.nil?
-        #Note: to myself: What is this?
-        @invalid_subtasks = @task_detail.subtasks_valid(@subtasks)
-        @invalid_subtasks.each { |i| @subtasks.delete(Task.find(i)) }
-      end
-    end
-
+    @task_detail, @subtasks, @invalid_subtasks = Task.preview_lists(Task.preview_task(params), params)
     respond_to do |format|
       format.js
     end

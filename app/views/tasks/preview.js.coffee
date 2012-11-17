@@ -1,7 +1,8 @@
 
-$('#right_content').html "<%= escape_javascript render partial: 'details_container', locals: {subs: false} %>"
+$('#right_content').html "<%= escape_javascript render partial: 'details_container', locals: {task: @task_detail, subs: false} %>"
 
-$('li.toggle', '#right_content').append "<%= escape_javascript render partial: 'preview_subtasks' %>"
+$('li.toggle', '#right_content').append "<%= escape_javascript render partial: 'preview_subtasks', locals: {subtasks: @subtasks} %>"
+
 $('li.toggle', '#right_content').first().css "display", "inline"
 $('#right_content > div > div > h2').html "<%= t('task.preview.title') %>"
 errors = "<%= @invalid_subtasks.to_json %>"
