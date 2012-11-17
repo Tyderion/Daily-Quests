@@ -33,14 +33,22 @@ class Task < ActiveRecord::Base
 
   after_initialize :create_validator
 
-  extend SearchService
-  extend SortService
+  after_destroy :destroy_subtasks
+
+  extend SearchService #Todo: Test presence
+  extend SortService #Todo: Test presence
 
 
   private
     def create_validator
       @validator ||=  SubtaskValidatorWithCache.new(self) unless self.id.nil?
 
+    end
+
+    def destroy_subtasks
+      #Todo: Tests
+      subtasks = Subtask.where("task_id = ? or subtask_id = ?", self.id, self.id)
+      subtasks.each { |s| s.destroy }
     end
   public
 

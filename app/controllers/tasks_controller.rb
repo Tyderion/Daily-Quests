@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  #Todo: Refactor create, destroy
+  #Todo: Refactor create
   #Todo: Write Tests
   #Todo: Write Comments
 
@@ -107,10 +107,6 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    #This needs to go into the model
-    subtasks = Subtask.where("task_id = ? or subtask_id = ?", params[:id], params[:id])   #.select("id")
-    subtasks.each { |s| s.destroy }
-    #redirect_to tasks_url, :notice => "Successfully destroyed task."
     respond_to do |format|
       format.json {
         render json: { message: "Successfully destroyed task"},
