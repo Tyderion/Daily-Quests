@@ -81,6 +81,20 @@ $ ->
           error: value
 
   , "#new_task"
+  $('html').on
+    "ajax:error": (xhr, error) ->
+      errormessages = $.parseJSON $.parseJSON(error["responseText"]).errors
+      subtasks = $.parseJSON(error["responseText"]).subtasks
+      console.log subtasks
+      $('.inline_error').remove()
+      $('label[for^="task"]').css "color", "black"
+
+      $.each errormessages, (index, value) ->
+        add_error
+          title: index
+          error: value
+
+  , "[id^='edit_task']"
 
   $('html').on
     click: ->

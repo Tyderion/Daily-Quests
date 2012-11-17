@@ -45,6 +45,13 @@ def make_tasks_with_subtasks
 
 end
 
+def save_task(*args)
+  params = args.extract_options!
+  task = Task.new(title: params[:title], description: params[:description], private: false, type: "Task", creator: 1)
+  debugger unless task.save
+  task
+end
+
 # Create Tasks recursively by "walking through" the parsed YAML-Hash/Array construct
 @named_tasks = {}
 def make_task(task)
@@ -54,14 +61,14 @@ def make_task(task)
     #Create it
     if task['name']
       #If it has a name, store it
-      new_task << Task.create(title: task['title'], description: task['description'], private: false, type: "Task", creator: 1)
+      new_task << save_task( title: task['title'], description: task['description'] )
       @named_tasks["#{task['name']}"] = new_task[-1] #Todo: Move this into an if in the else
     elsif task['named']
       #If it is a named task, retrieve it
       new_task << @named_tasks[task['named']]
     else
       # Just create a task
-      new_task << Task.create(title: task['title'], description: task['description'], private: false, type: "Task", creator: 1)
+      new_task << save_task( title: task['title'], description: task['description'] )
     end
     unless task['subtasks'].nil?
       #Add subtasks if available
@@ -75,7 +82,7 @@ def make_task(task)
     regex = /\#\{for\}/i
     #Create a task for each option in the range
     range.each do |nr|
-      new_task << Task.create(title: task['title'].sub( regex, nr), description: task['description'].sub( regex, nr), private: false, type: "Task", creator: 1 )
+      new_task << save_task(title: task['title'].sub( regex, nr), description:task['description'].sub( regex, nr))
     end
     #If there is are even deeper subtasks
     unless task['subtasks'].nil?

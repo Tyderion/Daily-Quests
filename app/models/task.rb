@@ -14,6 +14,7 @@
 #  type        :integer
 #
 class Task < ActiveRecord::Base
+  #Todo: Fix Task.create
   attr_accessible :title, :description, :private, :type, :creator
   include RailsLookup
   lookup :task_type, as: :type
@@ -41,9 +42,8 @@ class Task < ActiveRecord::Base
 
 
   private
-    def create_validator
+    def create_validator(*args)
       @validator ||=  SubtaskValidatorWithCache.new(self) unless self.id.nil?
-
     end
 
     def destroy_subtasks
@@ -51,7 +51,56 @@ class Task < ActiveRecord::Base
       subtasks = Subtask.where("task_id = ? or subtask_id = ?", self.id, self.id)
       subtasks.each { |s| s.destroy }
     end
+
+    def self.check_new_parameters(*args)
+      params = args.extract_options!
+      if params[:type].blank?
+        #Default type is Task
+        params[:type] = TaskType.name_for 1
+      else
+        params[:type] = TaskType.name_for params[:type].to_i
+      end
+      unless params[:private].class == FalseClass
+        params[:private] = params[:private].to_i == 0 ? false : true
+      end
+      params.delete :subtasks
+      params
+    end
   public
+    def self.new(*args)
+      params = args.extract_options!
+      params = params[:task] if params[:task]
+      task_params = Task.check_new_parameters( params )
+      super(task_params)
+    end
+
+
+    def save(*args)
+      result = super()
+      params = args.extract_options!
+      self.add_subtasks(params[:subtasks]) unless !result || params.nil?
+      result
+    end
+
+    def update_attributes(*args)
+      #Todo: Rework this method
+      params = args.extract_options!
+      subtasks = nil
+      params.delete :id unless params[:id].nil?
+      unless params[:subtasks].nil?
+        subtasks = params[:subtasks]
+        params.delete :subtasks
+      end
+      result = super(params)
+      debugger
+      missing_subtask_list = (self.subtasks - subtasks.map{|k,v| Task.find(v.to_i) }).map {|e| Task.find(e.id) }
+      # Todo only add if super() worked, else just validate
+      self.add_subtasks(missing_subtask_list)
+      result && self.errors.messages.length == 0
+    end
+
+
+
 
     # Make it not generate an exception when trying to assign an empty type
     def type=(t)
@@ -164,8 +213,7 @@ class Task < ActiveRecord::Base
     #   - True if other is a valid task this task
     #
     def validate_subtask?(other)
-      create_validator
-      @validator.valid?(other)
+      create_validator.valid?(other)
     end
 
     # Task an array of Task-IDs and returns an array with invalid tasks-IDs
@@ -177,9 +225,8 @@ class Task < ActiveRecord::Base
     #
     def validate_subtasks(subtasks)
       array = []
-      create_validator
       subtasks.each do |id|
-        array << id unless @validator.valid? Task.find(id)
+        array << id unless validate_subtask(Task.find(id))
       end
       array
     end
@@ -204,19 +251,22 @@ class Task < ActiveRecord::Base
 
 
     # Adds all tasks as subtasks if each is valid
+    # Adds errorsmessages to the task object
     #
     # * *Args*    :
     #   - +tasks+ -> An array of Tasks to be added
     # * *Returns* :
-    #   - nil if all tasks were added, an array with an errormessage for each invalid subtask otherwise
+    #   - the task
     #
     def add_subtasks(tasks)
       array = {}
-      tasks.each do |element|
-        error = add_subtask(element)
-        array[task.id] = error unless error.nil?
+      unless tasks.nil?
+        tasks.each do |element|
+          error = add_subtask(element)
+          self.errors.add("subtask#{element.id}", error) unless error.nil?
+        end
       end
-      array.length == 0 ? nil : array
+      self
     end
 
 
@@ -229,7 +279,7 @@ class Task < ActiveRecord::Base
     #   - A string with the error or nil
     #
     def self.response(task, valid= true)
-      t('task.invalid_subtask') unless valid
+      I18n.t('task.invalid_subtask') unless valid
     end
 
 

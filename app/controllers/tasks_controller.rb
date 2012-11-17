@@ -35,41 +35,16 @@ class TasksController < ApplicationController
   end
 
   def create
-    #debugger
-    valid = true
-    subtasks = params[:task][:subtasks]
-    params[:task].delete :subtasks
-    type_error = false
-
-    if params[:task][:type].blank?
-      params[:task][:type] = "Task"
-      type_error = true
-    else
-      params[:task][:type] = TaskType.name_for params[:task][:type].to_i
-    end
     @task = Task.new(params[:task])
-    @tasks = Task.where(private: false).paginate(:page => params[:page], per_page: 5)
-
-    if @task.valid? && !type_error
-      @task.save
-      unless subtasks.nil?
-        subtasks.each do |k,e|
-          @task.add_subtask(Task.find(e))
-        end
-      end
-      #Todo: Display Notice and Really redirect xD
-      redirect_to tasks_path, :notice => "Successfully created task."
-    else
-      if type_error
-        @task.errors.add :type, "Can't be blank."
-      end
-      params[:task][:subtasks] = subtasks
-
-      respond_to do |format|
+    @tasks = Task.where(private: false)
+    #Todo: Display Notice and Really redirect xD
+    respond_to do |format|
+      if @task.save(params[:task])
+        redirect_to tasks_path, :notice => "Successfully created task."
+      else
         format.json {
           render json:
-          { errors: @task.errors.to_json,
-            subtasks: params[:task][:subtasks].to_json
+          { errors: @task.errors.to_json
             }, content_type: "json", status: 406
         }
       end
@@ -93,10 +68,16 @@ class TasksController < ApplicationController
   def update
     #Looks ok, but does it do what is should?
     @task = Task.find(params[:id])
-    if @task.update_attributes(params[:task])
-      redirect_to @task, :notice  => "Successfully updated task."
-    else
-      render :action => 'edit'
+    respond_to do |format|
+      if @task.update_attributes(params[:task])
+        format.js
+      else
+        format.json {
+            render json:
+            { errors: @task.errors.to_json
+              }, content_type: "json", status: 406
+          }
+      end
     end
   end
 
