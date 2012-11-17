@@ -45,9 +45,9 @@ describe SearchService do
     end
   end
 
-  describe "search" do
+  describe "search_by_query" do
     it "search for the query with arguments passed to it" do
-      result = @class.search(@hash).map{|t| t.title }
+      result = @class.search_by_query(@hash).map{|t| t.title }
       result.should == @titles[1,3]
     end
   end

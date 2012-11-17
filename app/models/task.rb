@@ -120,9 +120,9 @@ class Task < ActiveRecord::Base
     def add_subtask(task)
       if validate_subtask?(task)
         self.subtasks.push Subtask.new(task: self, subtask: task)
-        return response(task, true)
+        return Task.response(task, true)
       end
-      response(task, false)
+      Task.response(task, false)
     end
 
 
