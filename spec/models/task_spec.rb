@@ -16,7 +16,7 @@ require 'spec_helper'
 
 describe Task do
 
-  it "has a valid factory (factory doesn't always work in this test Oo)" do
+  it "has a valid factory" do
     FactoryGirl.create(:task).should be_valid
   end
 

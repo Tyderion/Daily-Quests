@@ -14,7 +14,6 @@
 #  type        :integer
 #
 class Task < ActiveRecord::Base
-  #Todo: Fix Task.create
   #Todo: Refactor update_attributes and make it work
   attr_accessible :title, :description, :private, :type, :creator
   include RailsLookup
@@ -54,7 +53,7 @@ class Task < ActiveRecord::Base
     end
 
     def self.check_new_parameters(*args)
-      params = args.extract_options!
+      params = args[0] #= args.extract_options!
       if params[:type].blank?
         #Default type is Task
         params[:type] = TaskType.name_for 1
@@ -68,11 +67,17 @@ class Task < ActiveRecord::Base
       params
     end
   public
+
+
+
     def self.new(*args)
-      params = args.extract_options!
-      params = params[:task] if params[:task]
-      task_params = Task.check_new_parameters( params )
+      params = args[0]
+      task_params = Task.check_new_parameters( params ) unless params.nil?
       super(task_params)
+    end
+
+    def self.TestCreate
+      self.create(title: "Test Title", description: "Test description", creator: 1, type: "Task")
     end
 
 
