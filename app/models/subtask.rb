@@ -25,6 +25,14 @@ class Subtask < ActiveRecord::Base
            :subtask_valid?, :public?, :private?, :type, :type=, :visibility,
            to: :subtask
 
+  after_destroy do |record|
+    connection.delete(
+        "DELETE FROM #{record.class.quoted_table_name} " +
+        "WHERE #{connection.quote_column_name(record.class.primary_key)} = #{record[:id]}",
+        "#{record.class.name} Destroy"
+      )
+  end
+
 
   after_save do |record|
     # unless record.task.subtasks.to_a.include? record
@@ -33,18 +41,18 @@ class Subtask < ActiveRecord::Base
   end
 
 
-  def destroy
-    unless new_record?
-      connection.delete(
-        "DELETE FROM #{self.class.quoted_table_name} " +
-        "WHERE #{connection.quote_column_name(self.class.primary_key)} = #{self[:id]}",
-        "#{self.class.name} Destroy"
-      )
-    end
+  # def destroy
+  #   unless new_record?
+  #     connection.delete(
+  #       "DELETE FROM #{self.class.quoted_table_name} " +
+  #       "WHERE #{connection.quote_column_name(self.class.primary_key)} = #{self[:id]}",
+  #       "#{self.class.name} Destroy"
+  #     )
+  #   end
 
-    @destroyed = true
-    freeze
-  end
+  #   @destroyed = true
+  #   freeze
+  # end
 
 
 
