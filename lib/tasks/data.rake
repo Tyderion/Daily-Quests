@@ -10,9 +10,7 @@ namespace :dailyquest do
       DatabaseCleaner.clean
     end
 
-    task load: [:'generate:types', :'generate:simple_tasks'] do
-      #Do Nothing...
-    end
+    task load: [:'generate:types', :'generate:simple_tasks']
 
     task :reload do
       Rake::Task['dailyquest:data:delete'].invoke

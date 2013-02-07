@@ -17,3 +17,9 @@
 
 # Ignore doc
 /doc
+
+#Ignore .tags files
+.tags
+.tags_sorted_by_file
+.gemtags
+.sass-cache/

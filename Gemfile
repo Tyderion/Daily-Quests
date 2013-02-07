@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.8'
+gem 'rails', '~>3.2.8'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -33,10 +33,7 @@ group :development do
   gem 'nifty-generators'
   gem 'haml-rails'
   gem 'thin'
-  # Debugging for Rails on Ruby 1.9.3, use shellscript to install dependencies...
-  gem "linecache19", "0.5.13"
-  gem "ruby-debug-base19", "0.11.26"
-  gem "ruby-debug19", require: 'ruby-debug'
+  gem 'debugger'
 end
 
 

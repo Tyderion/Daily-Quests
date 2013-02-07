@@ -54,7 +54,7 @@ class Task < ActiveRecord::Base
 
     def self.check_new_parameters(*args)
       params = args[0] #= args.extract_options!
-      if params[:type].blank?
+      if params[:type].blank? || params[:type] > TaskType.last.id
         #Default type is Task
         params[:type] = TaskType.name_for 1
       else
@@ -74,10 +74,6 @@ class Task < ActiveRecord::Base
       params = args[0]
       task_params = Task.check_new_parameters( params ) unless params.nil?
       super(task_params)
-    end
-
-    def self.TestCreate
-      self.create(title: "Test Title", description: "Test description", creator: 1, type: "Task")
     end
 
 
@@ -152,16 +148,17 @@ class Task < ActiveRecord::Base
       subtasks = []
       invalid_subtasks = []
       unless params[:task]['subtasks'].nil?
-        subtask_ids = params[:task]['subtasks']
+        subtask_ids = params[:task]['subtasks'].map(&:to_i)
         #Grab all subtasks
         subtasks_unnumbered = Task.find(subtask_ids.uniq)
         unless self.id.nil?
           # Remove invalid subtasks so they do not get rendered
-          invalid_subtasks = self.validate_subtasks(subtasks_unnumbered)
-          invalid_subtasks.each do |i|
-            subtasks.delete(Task.find(i))
-            subtasks_ids.delete(i)
+          invalid_subtasks = self.valid_subtasks(subtasks_unnumbered)
+          invalid_subtasks.each do |inv_sub|
+            subtasks_unnumbered.delete(inv_sub)
+            subtask_ids.delete(inv_sub.id)
           end
+
         end
         #Create a hash from the valid tasks
         unnumbered_hash = Hash[subtasks_unnumbered.map{|t| [t.id, t]}]
@@ -218,7 +215,7 @@ class Task < ActiveRecord::Base
     # * *Returns* :
     #   - True if other is a valid task this task
     #
-    def validate_subtask?(other)
+    def valid_subtask?(other)
       create_validator.valid?(other)
     end
 
@@ -229,10 +226,10 @@ class Task < ActiveRecord::Base
     # * *Returns* :
     #   - an array containing all invalid subtasks
     #
-    def validate_subtasks(subtasks)
+    def valid_subtasks(subtasks)
       array = []
-      subtasks.each do |id|
-        array << id unless validate_subtask(Task.find(id))
+      subtasks.each do |sub|
+        array << sub unless valid_subtask?(Task.find(sub))
       end
       array
     end
@@ -245,7 +242,7 @@ class Task < ActiveRecord::Base
     #   - nil if successful, an errormessage in a hash otherwise
     #
     def add_subtask(task)
-      if validate_subtask?(task)
+      if valid_subtask?(task)
         self.subtasks.push Subtask.new(task: self, subtask: task)
         return Task.response(task, true)
       end
