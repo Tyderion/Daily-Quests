@@ -2,16 +2,23 @@ require 'factory_girl'
 
 FactoryGirl.define do
   factory :task do
-    sequence(:description)  { |n| "Description #{n}"+Faker::Lorem.paragraph }
-    sequence(:title) { |n| "Title #{2}" }
+    sequence(:description)  { |n| "Description #{n}: A Nice Task Number #{n}" }
+    sequence(:title) { |n| "Title #{n}" }
     private false
     type "Task"
     creator 1 # First User creates all
   end
 
+  trait :quest do
+    type "Quest"
+  end
+  trait :questsequence do
+    type "Questsequence"
+  end
+
   # factory :subtask do
-  #   association :task, factory: :task, type: TaskType.id_for("Task")
-  #   association :subtask, factory: :task, type: TaskType.id_for("Task")
+  #   association :task, factory: :task
+  #   association :subtask, factory: :task
   # end
   # factory :quest do
   #   association :task, factory: :task, type: TaskType.id_for("Task")

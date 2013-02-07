@@ -267,6 +267,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  awesome_print
   capybara
   chosen-rails
   coffee-rails (~> 3.2.1)
@@ -274,7 +275,7 @@ DEPENDENCIES
   debugger
   devise
   email_spec
-  factory_girl_rails
+  factory_girl_rails (~> 4.0)
   faker
   gon
   guard-rspec
